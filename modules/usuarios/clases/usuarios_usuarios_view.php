@@ -457,7 +457,7 @@ class usuarios_usuarios_view{
                         </div>
                         <div id="divFoto" class="form-group">
                             <label for="txtFoto" class="col-md-6 control-label">
-                                <?php $objTemplate->drawTitleLeft("Fotografía"); ?>
+                                <?php $objTemplate->drawTitleLeft("Fotografia"); ?>
                             </label>
                             <div class="col-md-6">
                                 <?php

@@ -205,8 +205,8 @@ class usuarios_usuarios_model{
         $arrData["normal"]["texto"] = $lang[MODULO]["usuarios_normal"];
         $arrData["normal"]["selected"] = false;
 
-        $arrData["asesor"]["texto"] = $lang[MODULO]["usuarios_asesor"];
-        $arrData["asesor"]["selected"] = false;
+        $arrData["Mensajero"]["texto"] = $lang[MODULO]["usuarios_asesor"];
+        $arrData["Mensajero"]["selected"] = false;
 
         if( $_SESSION["hml"]["tipo_usuario"] != "admin" ){
             unset($arrData["admin"]);
