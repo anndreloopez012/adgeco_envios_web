@@ -1,0 +1,4 @@
+#RewriteEngine on
+#RewriteRule ^setup/(\w+)/?$ cpanel.php?id=$1
+SetEnv HTACCESS on
+

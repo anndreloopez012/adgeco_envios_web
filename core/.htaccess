@@ -1,0 +1,2 @@
+DirectoryIndex index.php index.html
+ErrorDocument 404 "<script>document.location.href='404.php'</script>"
