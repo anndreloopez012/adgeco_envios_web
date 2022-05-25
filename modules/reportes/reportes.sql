@@ -14,8 +14,8 @@ UPDATE modulo SET icono = "icon-idc-ascendant-bars-graphic" WHERE modulo = 4;
 INSERT INTO modulo_dependencia (modulo, dependencia) VALUES ('4', '3');
 
 UPDATE modulo SET orden = 5 WHERE modulo = 4;
-/*HASTA AQUI IDC PRODUCCION*/
-/*HASTA AQUI IDC TEST*/
+/*HASTA AQUI ADGECOPRODUCCION*/
+/*HASTA AQUI ADGECOTEST*/
 /*INICIO ESAMAYOA 26/02/2019*/
 INSERT INTO acceso (acceso,modulo,codigo,orden,acceso_pertenece,path,publico,privado,activo,add_user,add_fecha) VALUES (33,4,'renovacion_contratos',3,NULL,'reportes_renovacion_contratos.php','N','Y','Y',1,NOW());
 INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (33,1,'Renovación de contratos','Renovación de contratos');

@@ -202,7 +202,7 @@
 }
 
 @media(min-width:320px) {
-    .btn-idc {
+    .btn-adgeco{
         width: 100%;
         margin-top: 5px;
     }
@@ -222,7 +222,7 @@
 }
 
 @media(min-width:360px) {
-    .btn-idc {
+    .btn-adgeco{
         width: 100%;
         margin-top: 5px;
     }
@@ -242,7 +242,7 @@
 }
 
 @media(min-width:768px) {
-    .btn-idc {
+    .btn-adgeco{
         width: auto;
         margin-left: 5px;
     }
@@ -263,7 +263,7 @@
 }
 
 .idc-blue {
-    color: #244289;
+    color: #D35400;
 }
 
 .idc-red {
@@ -271,5 +271,5 @@
 }
 
 .idc-titulo-principal {
-    border-bottom: 1px solid #244289;
+    border-bottom: 1px solid #D35400;
 }

@@ -31,7 +31,7 @@ class template extends main{
         <html>
             <head>
                 <meta charset="ISO-8859-1">
-                <title>IDC - <?php print $strTitle; ?></title>
+                <title>ADGECO- <?php print $strTitle; ?></title>
                 <link rel="shortcut icon" href="templates/idc/images/icon.png"/>
                 <!-- Tell the browser to be responsive to screen width -->
                 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -113,16 +113,10 @@ class template extends main{
                         <header class="main-header">
                             <!-- Logo -->
                             <a href="index.php" class="logo">
-                                <span class="logo-mini" style="padding-left: 5px; padding-top: 16px;"><img src="templates/idc/images/logo.png" class="img-responsive center-block" alt="Logo Image" /></span>
-                                <span class="logo-lg"><img src="templates/idc/images/logo.png" class="img-responsive center-block" alt="Logo Image" /></span>
+                                <span class="logo-mini" style="padding-left: 5px; padding-top: 16px;">ADGECO</span>
+                                <span class="logo-lg">ADGECO</span>
                             </a>
-                            <nav class="navbar navbar-static-top" role="navigation" style="z-index:1000">
-                                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </a>
+                            <nav class="navbar navbar-static-top" role="navigation" style="z-index:1000">                             
                                 <div class="navbar-custom-menu">
                                     <ul class="nav navbar-nav">
                                         <!-- User Account: style can be found in dropdown.less -->
@@ -1210,7 +1204,7 @@ class template extends main{
 
         $strColor = (empty($strColor)) ? "" : "btn-{$strColor}";
         ?>
-        <button id="<?php print $strId; ?>" type="button" class="btn btn-<?php print $strTamanio; ?> btn-default btn-idc <?php print $strColor; ?>" onclick="<?php print $strOnClick; ?>">
+        <button id="<?php print $strId; ?>" type="button" class="btn btn-<?php print $strTamanio; ?> btn-default btn-ADGECO<?php print $strColor; ?>" onclick="<?php print $strOnClick; ?>">
             <?php
             if( !$boolIconRight ) {
                 ?>

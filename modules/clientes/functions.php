@@ -33,9 +33,6 @@ function getInfoEstados() {
 }
 
 function clientes_dashboard() {
-    require_once("modules/clientes/clases/clientes_dashboard_controller.php");
-
-    $objController = new clientes_dashboard_controller();
-    $objController->draw_content();
+    //contenido
 
 }
