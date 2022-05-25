@@ -391,7 +391,7 @@ class template extends main{
         ?>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
-            <li class="header">Menú</li>
+            <li class="header">Menu</li>
             <li class="treeview">
                 <a href="index.php">
                     <i class="icon-idc-home153"></i> <span><?php print "&nbsp;Inicio"; ?></span>
