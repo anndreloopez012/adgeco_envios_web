@@ -598,7 +598,7 @@ class template extends main{
                                 </button>
                             </div>
                             <div class="form-group text-center">
-                                <a href="reset_password.php?act=1">Olvidé mi contraseña</a>
+                                <a href="reset_password.php?act=1">Olvide mi password</a>
                             </div>
 
                         <?php

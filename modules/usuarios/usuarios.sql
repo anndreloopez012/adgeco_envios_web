@@ -64,7 +64,7 @@ INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_esta_seguro_
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_esta_seguro_eliminar_usuario',2,1,'¿Esta seguro de eliminar este usuario?');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_informacion',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_informacion',2,1,'Información');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_informacion',2,1,'Informacion');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_accesos_permisos',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_accesos_permisos',2,1,'Accesos y permisos');
@@ -89,10 +89,10 @@ INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_nombre_compl
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_nombre_completo',2,1,'Nombre completo');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_genero',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_genero',2,1,'Género');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_genero',2,1,'Genero');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_seleccione_opcion',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_seleccione_opcion',2,1,'Seleccione una opción...');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_seleccione_opcion',2,1,'Seleccione una opcion...');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_masculino',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_masculino',2,1,'Masculino');
@@ -101,7 +101,7 @@ INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_femenino',2,
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_femenino',2,1,'Femenino');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_pais',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_pais',2,1,'País');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_pais',2,1,'Pais');
 
 ALTER TABLE persona
     MODIFY COLUMN email VARCHAR(255) NOT NULL COMMENT 'EMAIL DE LA PERSONA',
@@ -132,19 +132,19 @@ INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_perfiles_acc
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_perfiles_acceso',2,1,'Perfiles de acceso');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_descripcion',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_descripcion',2,1,'Descripción');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_descripcion',2,1,'Descripcion');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_usuario',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_usuario',2,1,'Usuario');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_usuario_en_uso',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_usuario_en_uso',2,1,'Este usuario ya está en uso');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_usuario_en_uso',2,1,'Este usuario ya esta en uso');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_correo_electronico',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_correo_electronico',2,1,'Correo electrónico');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_correo_electronico',2,1,'Correo electronico');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_correo_electronico_invalido',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_correo_electronico_invalido',2,1,'Correo electrónico inválido');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_correo_electronico_invalido',2,1,'Correo electronico invalido');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_perfil',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_perfil',2,1,'Perfil');
@@ -284,13 +284,13 @@ $$
 DELIMITER ;
 
 INSERT INTO configuracion (modulo,codigo,tipo_dato,valores,valor,add_user,add_fecha) VALUES (2,'usuarios_correo_envi','texto','','info@idctest.homelandplanet.com',1,NOW());
-INSERT INTO configuracion_idioma (modulo,codigo,idioma,nombre,descripcion) VALUES (2,'usuarios_correo_envi',1,'Correo electrónico para enviar la contraseña','Correo electrónico desde el que se enviará la contraseña');
+INSERT INTO configuracion_idioma (modulo,codigo,idioma,nombre,descripcion) VALUES (2,'usuarios_correo_envi',1,'Correo electronico para enviar la contraseña','Correo electronico desde el que se enviara la contraseña');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_correo_password_asunto',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_correo_password_asunto',2,1,'Contraseña de acceso al sitio');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_correo_password_mensaje',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_correo_password_mensaje',2,1,'Estimado usuario<br><br>Por este medio le informamos que su contraseña de acceso para el sitio [Sitio], ha sido generada automáticamente por nuestro sistema.<br><br>Usuario: [Usuario]<br>Contraseña: [Contraseña]<br><br>Le recomendamos que al ingresar al sitio, se dirija a la sección "Mi cuenta" para cambiar la contraseña por una de su preferencia.<br><br>Atentamente,<br>IDC');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_correo_password_mensaje',2,1,'Estimado usuario<br><br>Por este medio le informamos que su contraseña de acceso para el sitio [Sitio], ha sido generada automaticamente por nuestro sistema.<br><br>Usuario: [Usuario]<br>Contraseña: [Contraseña]<br><br>Le recomendamos que al ingresar al sitio, se dirija a la seccion "Mi cuenta" para cambiar la contraseña por una de su preferencia.<br><br>Atentamente,<br>IDC');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_eliminar_usuario',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_eliminar_usuario',2,1,'Eliminar usuario');
@@ -340,13 +340,13 @@ INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_repetido',2,
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_repetido',2,1,'Usuario Repetido');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_no_hay_info',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_no_hay_info',2,1,'No hay información almacenada');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_no_hay_info',2,1,'No hay informacion almacenada');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_perfil_eliminar',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_perfil_eliminar',2,1,'Eliminar');
 
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_msj_ad',2,1,NOW());
-INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_msj_ad',2,1,'¿Está seguro de eliminar el perfil de acceso?');
+INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_msj_ad',2,1,'¿Esta seguro de eliminar el perfil de acceso?');
 
 DELIMITER $$
 CREATE PROCEDURE sp_perfil_insert(
@@ -556,7 +556,7 @@ INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_perfil_regi
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_perfil_registro_msj_alert_del',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_perfil_registro_msj_alert_del',2,1,'Perfil eliminado exitosamente');
 /*FIN SCRIPT IARRIAGA*/
-/*HASTA AQUÍ LMARROQUIN*/
+/*HASTA AQUi LMARROQUIN*/
 
 /* INICIO SCRIPT TDELEON 13/01/2015*/
 DROP PROCEDURE IF EXISTS sp_usuario_insert;
@@ -617,11 +617,11 @@ END
 $$
 DELIMITER ;
 
-UPDATE lang_idioma SET valor = 'Descripción' WHERE lang_idioma.lang = 'usuarios_descripcion' AND lang_idioma.modulo =2 AND lang_idioma.idioma =1;
+UPDATE lang_idioma SET valor = 'Descripcion' WHERE lang_idioma.lang = 'usuarios_descripcion' AND lang_idioma.modulo =2 AND lang_idioma.idioma =1;
 /*FIN SCRIPTS TDELEON 13/01/2015 10:21 38*/
 
 /* INICIO SCRIPT TDELEON 15/01/2015*/
-UPDATE lang_idioma SET valor = '¿Está seguro de eliminar este usuario?' WHERE lang_idioma.lang = 'usuarios_esta_seguro_eliminar_usuario' AND lang_idioma.modulo =2 AND lang_idioma.idioma =1;
+UPDATE lang_idioma SET valor = '¿Esta seguro de eliminar este usuario?' WHERE lang_idioma.lang = 'usuarios_esta_seguro_eliminar_usuario' AND lang_idioma.modulo =2 AND lang_idioma.idioma =1;
 /*FIN SCRIPTS TDELEON 15/01/2015 11:45 am*/
 /*HASTA AQUI TDELEON*/
 
@@ -630,7 +630,7 @@ INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_todos',2,1,N
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_todos',2,1,'Todos');
 
 UPDATE  lang_idioma
-   SET  valor = 'Búsqueda'
+   SET  valor = 'Busqueda'
  WHERE  lang = 'usuarios_busqueda'
    AND  modulo = 2
    AND  idioma = 1;
@@ -659,7 +659,7 @@ DELIMITER ;
 INSERT INTO lang (lang,modulo,add_user,add_fecha) VALUES ('usuarios_cambiar_contrasenia',2,1,NOW());
 INSERT INTO lang_idioma (lang,modulo,idioma,valor) VALUES ('usuarios_cambiar_contrasenia',2,1,'Por favor cambiar de contraseña para continuar');
 /*FIN SCRIPT IARRIAGA 20/02/2015*/
-/*HASTA AQUÍ AMUÑOZ*/
+/*HASTA AQUi AMUÑOZ*/
 
 /*INICIO SCRIPTS JMILIAN 30/03/2015 14.11*/
 DROP PROCEDURE sp_persona_delete;

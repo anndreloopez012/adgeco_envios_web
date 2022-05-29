@@ -76,7 +76,7 @@ class usuarios_mi_cuenta_view{
                         ?>
                         <div class="alert alert-warning alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>Atención!</strong> Tu contraseña de acceso al sistema fue generada aleatoriamente, por favor cambiar de contraseña por una de tu preferencia.
+                          <strong>Atencion!</strong> Tu contraseña de acceso al sistema fue generada aleatoriamente, por favor cambiar de contraseña por una de tu preferencia.
                         </div>
                         <?php
                     }

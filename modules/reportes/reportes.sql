@@ -2,7 +2,7 @@ INSERT INTO modulo (modulo,codigo,orden,publico,privado,activo,add_user,add_fech
 INSERT INTO modulo_idioma (modulo,idioma,nombre) VALUES (4,1,'Reportes');
 
 INSERT INTO acceso (acceso,modulo,codigo,orden,acceso_pertenece,path,publico,privado,activo,add_user,add_fecha) VALUES (13,4,'tipo_inversiones',2,NULL,'reportes_tipo_inversiones.php','N','Y','Y',1,NOW());
-INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (13,1,'Tipo de inversión','Tipo de inversión');
+INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (13,1,'Tipo de inversion','Tipo de inversion');
 INSERT INTO acceso_tipo_permitido (acceso,tipo_acceso) VALUES (13,1);
 
 INSERT INTO acceso (acceso,modulo,codigo,orden,acceso_pertenece,path,publico,privado,activo,add_user,add_fecha) VALUES (17,4,'reportes_estados_tiempos',1,NULL,'reportes_estados_tiempos.php','N','Y','Y',1,NOW());
@@ -18,7 +18,7 @@ UPDATE modulo SET orden = 5 WHERE modulo = 4;
 /*HASTA AQUI ADGECOTEST*/
 /*INICIO ESAMAYOA 26/02/2019*/
 INSERT INTO acceso (acceso,modulo,codigo,orden,acceso_pertenece,path,publico,privado,activo,add_user,add_fecha) VALUES (33,4,'renovacion_contratos',3,NULL,'reportes_renovacion_contratos.php','N','Y','Y',1,NOW());
-INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (33,1,'Renovación de contratos','Renovación de contratos');
+INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (33,1,'Renovacion de contratos','Renovacion de contratos');
 INSERT INTO acceso_tipo_permitido (acceso,tipo_acceso) VALUES (33,1);
 /*HASTA AQUI ESAMAYOA 26/02/2019*/
 /*INICIO ESAMAYOA 27/02/2019*/

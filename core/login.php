@@ -40,7 +40,7 @@ global $cfg, $lang;
         // Si NO existe el registro.
         if ( $intUserID > 0) {
 
-            // Si estaba en línea, lo deja afuera...
+            // Si estaba en linea, lo deja afuera...
             clear_login();
             $boolReturn = true;
         }
@@ -67,7 +67,7 @@ global $cfg, $lang;
 
 
 /**
-* Funcion que llena la información del browser en la variable de session
+* Funcion que llena la informacion del browser en la variable de session
 *
 */
 function core_fillBrowserInformation() {
@@ -147,7 +147,7 @@ function clear_login() {
 
 
 /**
-* Función que llena la variable de sessión con el primer ingreso de la información del login
+* Funcion que llena la variable de session con el primer ingreso de la informacion del login
 * @param integer $uid: Usuario logineado
 * @param: boolean $autologin: Revisa si establece los cookies del login
 * @param: string $login_passwd: Password del login
@@ -324,7 +324,7 @@ function check_autologin(){
 }
 
 /**
-* Función que Hace login
+* Funcion que Hace login
 *
 */
 function do_login( $strUsuario, $strPassword, $boolAutoLogin = false, $boolForceDisconect = false ){

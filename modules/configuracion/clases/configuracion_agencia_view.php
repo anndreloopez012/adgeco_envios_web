@@ -181,7 +181,7 @@ class configuracion_agencia_view{
             function fntEliminar() {
                 (new PNotify({
                     title: 'Confirmar',
-                    text: '¿Está seguro de eliminar la agencia?',
+                    text: '¿Esta seguro de eliminar la agencia?',
                     icon: 'glyphicon glyphicon-question-sign',
                     hide: false,
                     type: 'info',
@@ -257,7 +257,7 @@ class configuracion_agencia_view{
         <table class="table">
             <tr>
                 <th style="width: 40%;">Nombre</th>
-                <th style="width: 25%;">Código</th>
+                <th style="width: 25%;">Codigo</th>
                 <th style="width: 25%;">Empresa</th>
                 <th style="width: 10%; text-align: center;">Activo</th>
             </tr>
@@ -312,13 +312,13 @@ class configuracion_agencia_view{
         </div>
         <div class="row">
             <?php
-            $this->drawClienteCampoText("Código","codigo",$codigo,"col-lg-4 col-lg-offset-1",$objForm,true,"","",$boolLectura,$boolLectura);
-            $this->drawClienteCampoTextArea("Dirección","direccion",$direccion,"col-lg-4 col-lg-offset-2",$objForm,true,"","",$boolLectura,$boolLectura);
+            $this->drawClienteCampoText("Codigo","codigo",$codigo,"col-lg-4 col-lg-offset-1",$objForm,true,"","",$boolLectura,$boolLectura);
+            $this->drawClienteCampoTextArea("Direccion","direccion",$direccion,"col-lg-4 col-lg-offset-2",$objForm,true,"","",$boolLectura,$boolLectura);
             ?>
         </div>
         <div class="row">
             <?php
-            $this->drawClienteCampoText("Correo electrónico","correo_electronico",$correo_electronico,"col-lg-4 col-lg-offset-1",$objForm,true,"","",$boolLectura,$boolLectura);
+            $this->drawClienteCampoText("Correo electronico","correo_electronico",$correo_electronico,"col-lg-4 col-lg-offset-1",$objForm,true,"","",$boolLectura,$boolLectura);
             ?>
             <div class="col-lg-4 col-lg-offset-2">
                 <label for="por_defecto">
@@ -356,7 +356,7 @@ class configuracion_agencia_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }
@@ -383,7 +383,7 @@ class configuracion_agencia_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }
@@ -416,7 +416,7 @@ class configuracion_agencia_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }

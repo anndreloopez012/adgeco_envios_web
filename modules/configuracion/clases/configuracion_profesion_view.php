@@ -149,7 +149,7 @@ class configuracion_profesion_view{
             function fntEliminar() {
                 (new PNotify({
                     title: 'Confirmar',
-                    text: '¿Está seguro de eliminar la profesión?',
+                    text: '¿Esta seguro de eliminar la profesion?',
                     icon: 'glyphicon glyphicon-question-sign',
                     hide: false,
                     type: 'info',
@@ -303,7 +303,7 @@ class configuracion_profesion_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }
@@ -336,7 +336,7 @@ class configuracion_profesion_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }

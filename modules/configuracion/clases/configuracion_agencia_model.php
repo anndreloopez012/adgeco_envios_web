@@ -49,7 +49,7 @@ class configuracion_agencia_model{
         }
         db_free_result($qTMP);
         if( count($arrData) > 1 ) {
-            $arrData[""]["texto"] = "--SELECCIONE UNA OPCIÓN--";
+            $arrData[""]["texto"] = "--SELECCIONE UNA OPCIoN--";
             ksort($arrData);
         }
         return $arrData;

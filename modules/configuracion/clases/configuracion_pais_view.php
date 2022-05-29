@@ -38,10 +38,10 @@ class configuracion_pais_view{
         $objTemplate->draw_modal_close();
 
         $objTemplate->draw_modal_open("divAlertaCambioPredeterminado","md","md");
-        $objTemplate->draw_modal_draw_header("Cambio de país predeterminado","",true,"");
+        $objTemplate->draw_modal_draw_header("Cambio de pais predeterminado","",true,"");
         $objTemplate->draw_modal_open_content("divAlertaCambioPredeterminado");
         ?>
-        <div class="text-center">Ya hay un país predeterminado, solo puedo haber un país predeterminado</div>
+        <div class="text-center">Ya hay un pais predeterminado, solo puedo haber un pais predeterminado</div>
         <div class="text-center">¿Desea cambiarlo?</div>
         <?php
         $objTemplate->draw_modal_close_content();
@@ -171,7 +171,7 @@ class configuracion_pais_view{
             function fntEliminar() {
                 (new PNotify({
                     title: 'Confirmar',
-                    text: '¿Está seguro de eliminar el pais?',
+                    text: '¿Esta seguro de eliminar el pais?',
                     icon: 'glyphicon glyphicon-question-sign',
                     hide: false,
                     type: 'info',
@@ -377,7 +377,7 @@ class configuracion_pais_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }
@@ -410,7 +410,7 @@ class configuracion_pais_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }

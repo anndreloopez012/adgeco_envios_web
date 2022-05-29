@@ -156,7 +156,7 @@ class configuracion_empresa_view{
             function fntEliminar() {
                 (new PNotify({
                     title: 'Confirmar',
-                    text: '¿Está seguro de eliminar la empresa?',
+                    text: '¿Esta seguro de eliminar la empresa?',
                     icon: 'glyphicon glyphicon-question-sign',
                     hide: false,
                     type: 'info',
@@ -232,7 +232,7 @@ class configuracion_empresa_view{
         <table class="table">
             <tr>
                 <th style="width: 40%;">Nombre</th>
-                <th style="width: 20%;">Código de la persona obligada (GIIN)</th>
+                <th style="width: 20%;">Codigo de la persona obligada (GIIN)</th>
                 <th style="width: 20%; text-align: center;">Default</th>
                 <th style="width: 20%; text-align: center;">Activo</th>
             </tr>
@@ -278,8 +278,8 @@ class configuracion_empresa_view{
         ?>
         <div class="row">
             <?php
-            $this->drawClienteCampoText("Razón social y Nombre Comercial","nombre",$nombre,"col-lg-4 col-lg-offset-1",$objForm,true,"","",$boolLectura,$boolLectura);
-            $this->drawClienteCampoText("Código de la persona obligada (GIIN)","giin",$giin,"col-lg-4 col-lg-offset-2",$objForm,true,"","",$boolLectura,$boolLectura);
+            $this->drawClienteCampoText("Razon social y Nombre Comercial","nombre",$nombre,"col-lg-4 col-lg-offset-1",$objForm,true,"","",$boolLectura,$boolLectura);
+            $this->drawClienteCampoText("Codigo de la persona obligada (GIIN)","giin",$giin,"col-lg-4 col-lg-offset-2",$objForm,true,"","",$boolLectura,$boolLectura);
             ?>
         </div>
         <div class="row">
@@ -317,7 +317,7 @@ class configuracion_empresa_view{
                          if( data.resultado == "true" ) {
                             (new PNotify({
                                 title: 'Confirmar',
-                                text: 'Ya exite una empresa default. ¿Está seguro de cambiarla?',
+                                text: 'Ya exite una empresa default. ¿Esta seguro de cambiarla?',
                                 icon: 'glyphicon glyphicon-question-sign',
                                 hide: false,
                                 type: 'info',
@@ -399,7 +399,7 @@ class configuracion_empresa_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }
@@ -432,7 +432,7 @@ class configuracion_empresa_view{
                 <?php
             }
             ?>
-            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomación solicitada.</span>
+            <span id="span<?php print $strCampo; ?>" class="help-block ocultar"><span class="fa fa-warning"></span>&nbsp;Por favor ingresa la infomacion solicitada.</span>
         </div>
         <?php
     }

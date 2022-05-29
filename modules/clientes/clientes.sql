@@ -45,7 +45,7 @@ CREATE TABLE cliente(
     codigo VARCHAR(75) NULL COMMENT "CODIGO DE CLIENTE",
     tipo_persona ENUM('INDIVIDUAL','JURIDICA') NOT NULL COMMENT "TIPO DE PERSONA",
     estado ENUM('PROCESO_LLENADO','DEPARTAMENTO_COMERCIAL','UNIDAD_CUMPLIMIENTO','DEPARTAMENTO_LEGAL','CONTRATO_GENERADO','PENDIENTE_RENOVAR') NOT NULL COMMENT "INDICA EL ESTADO DEL PROCESO DEL CLIENTE",
-    fecha_contrato DATETIME NULL COMMENT "FECHA DE GENERACIÓN DE CONTRATO",
+    fecha_contrato DATETIME NULL COMMENT "FECHA DE GENERACIoN DE CONTRATO",
     add_user INT(10) UNSIGNED NOT NULL COMMENT 'FK ID DEL USUARIO QUE INSERTO LA TUPLA',
     add_fecha DATETIME NOT NULL COMMENT 'FECHA EN LA QUE SE INSERTO LA TUPLA',
     mod_user INT(10) UNSIGNED NULL COMMENT 'FK ID DEL USUARIO QUE MODIFICO LA TUPLA',
@@ -97,7 +97,7 @@ CREATE TABLE cliente_individual_solicitante(
     solicitante_beneficiario_tiene ENUM('Y','N') NOT NULL COMMENT 'INDICA SI EL SOLICITANTE TIENE BENEFICIARIOS O NO',
     solicitante_beneficiario_numero TINYINT NULL COMMENT 'NUMERO DE BENEFICIARIOS DEL SOLICITANTE',
     solicitante_actua_nombre_propio ENUM('Y','N') NOT NULL COMMENT 'INDICA SI EL SOLICITANTE ACTUA EN NOMBRE PROPIO',
-    solicitante_actua_nombre_completo VARCHAR(255) NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZÓN SOCIAL DE LA ENTIDAD',
+    solicitante_actua_nombre_completo VARCHAR(255) NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZoN SOCIAL DE LA ENTIDAD',
     solicitante_actua_primer_apellido VARCHAR(75) NULL COMMENT 'PRIMER APELLIDO DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_segundo_apellido VARCHAR(75) NULL COMMENT 'SEGUNDO APELLIDO DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_apellido_casada VARCHAR(75) NULL COMMENT 'APELLIDO DE CASADA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
@@ -105,14 +105,14 @@ CREATE TABLE cliente_individual_solicitante(
     solicitante_actua_segundo_nombre VARCHAR(75) NULL COMMENT 'SEGUNDO NOMBRE DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_otros_nombres VARCHAR(75) NULL COMMENT 'OTROS NOMBRES DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_genero ENUM('M','F') NULL COMMENT 'GENERO DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
-    solicitante_actua_razon_social VARCHAR(255) NULL COMMENT 'RAZÓN SOCIAL O NOMBRE COMERCIAL DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
-    solicitante_actua_fecha_nacimiento DATE NULL COMMENT 'FECHA DE NACIMIENTO, CREACIÓN O CONSTITUCIÓN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
-    solicitante_actua_nacionalidad SMALLINT UNSIGNED NULL COMMENT 'FK ID DEL PAIS, PAÍS DE CONSTITUCIÓN O NACIONALIDAD DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+    solicitante_actua_razon_social VARCHAR(255) NULL COMMENT 'RAZoN SOCIAL O NOMBRE COMERCIAL DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+    solicitante_actua_fecha_nacimiento DATE NULL COMMENT 'FECHA DE NACIMIENTO, CREACIoN O CONSTITUCIoN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+    solicitante_actua_nacionalidad SMALLINT UNSIGNED NULL COMMENT 'FK ID DEL PAIS, PAiS DE CONSTITUCIoN O NACIONALIDAD DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_otra_nacionalidad SMALLINT UNSIGNED NULL COMMENT 'FK ID DEL PAIS, OTRA NACIONALIDAD DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_identificacion_tipo ENUM('DPI','PASAPORTE') NULL COMMENT 'TIPO DE IDENTIFICACION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_identificacion_numero VARCHAR(75) NULL COMMENT 'NUMERO DE IDENTIFICACION EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_identificacion_lugar_emision VARCHAR(75) NULL COMMENT 'LUGAR DE EMISION DE IDENTIFICACION EN NOMBRE DE QUIEN ACTUA',
-    solicitante_actua_identificacion_pais SMALLINT UNSIGNED NULL COMMENT 'FK ID DEL PAIS, PAÍS DE LA IDENTIFICACION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+    solicitante_actua_identificacion_pais SMALLINT UNSIGNED NULL COMMENT 'FK ID DEL PAIS, PAiS DE LA IDENTIFICACION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_nit VARCHAR(10) NULL COMMENT 'NUMERO DE IDENTIFICACION TRIBUTARIA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_telefono_linea_fija VARCHAR(8) NULL COMMENT 'TELEFONO LINEA FIJA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
     solicitante_actua_telefono_celular VARCHAR(8) NULL COMMENT 'TELEFONO CELULAR O MOVIL DEL SOLICITANTE',
@@ -350,28 +350,28 @@ CREATE TABLE cliente_individual_solicitante_eco_cliente(
     CONSTRAINT cli_ind_sol_eco_cli_mod_use_f FOREIGN KEY (mod_user) REFERENCES persona (persona) ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_anexo_numero VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA ANEXO NÚMERO';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_giin VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA CÓDIGO DE LA PERSONA OBLIGADA GIIN';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pasaporte_numero VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA NÚMERO DE PASAPORTE';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pasaporte_pais SMALLINT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA PAÍS DE EMISION DE PASAPORTE';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_anexo_numero VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA ANEXO NuMERO';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_giin VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA CoDIGO DE LA PERSONA OBLIGADA GIIN';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pasaporte_numero VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA NuMERO DE PASAPORTE';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pasaporte_pais SMALLINT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA PAiS DE EMISION DE PASAPORTE';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pasaporte_fecha_vencimiento DATE NULL COMMENT 'SOLICITANTE FATCA FECHA DE VENCIMIENTO DEL PASAPORTE';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_ssn_tin INT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA SOCIAL SECURITY NUMBER O TAX ID NUMBER';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_green_card_number INT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA GREEN CARD NUMBER';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_green_card_fecha_vencimiento DATE NULL COMMENT 'SOLICITANTE FATCA GREEN CARD NUMBER FECHA DE VENCIMIENTO';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_direccion_exterior VARCHAR(255) NULL COMMENT 'SOLICITANTE FATCA DIRECCION DE DOMICILIO EN EL EXTERIOR';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pais_residencia SMALLINT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA PAÍS DE RESIDENCIA';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pais_ciudadania SMALLINT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA PAÍS DE CIUDADANIA';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pais_residencia SMALLINT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA PAiS DE RESIDENCIA';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pais_ciudadania SMALLINT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA PAiS DE CIUDADANIA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_es_cliente_fatca ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA ES CLIENTE FATCA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_posee_otras_nacionalidades ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA POSEE OTRAS NACIONALIDADES';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_otra_nacionalidad_pais SMALLINT UNSIGNED NULL COMMENT 'SOLICITANTE FATCA OTRA NACIONALIDAD PAIS';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pemanencia_mayor_183_dias_usa ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA HA PERMANECIDO EN LOS ESTADOS UNIDOS DE NORTE AMERICA POR UN PERÍODO MAYOR  DE 183 DÍAS';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_pemanencia_mayor_183_dias_usa ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA HA PERMANECIDO EN LOS ESTADOS UNIDOS DE NORTE AMERICA POR UN PERiODO MAYOR  DE 183 DiAS';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_transfiere_fondos_usa ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA TRANSFIERE FONDOS A LOS ESTADOS UNIDOS';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_recibe_fondos_usa ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA RECIBE FONDOS DE LOS ESTADOS UNIDOS';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_forma_w8ben ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA FORMA W8BEN';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_forma_w8ben_fecha DATE NULL COMMENT 'SOLICITANTE FATCA FECHA DE LA FORMA W8BEN';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_forma_w9 ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA FORMA W9';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_forma_w9_fecha DATE NULL COMMENT 'SOLICITANTE FATCA FECHA DE LA FORMA W9';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_cuenta_vinculo_contribuyente ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA CUENTA CON ALGUN VINCULO COMO CONTRIBUYENTE EN ESTADOS UNIDOS DE NORTE AMÉRICA';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_cuenta_vinculo_contribuyente ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA CUENTA CON ALGUN VINCULO COMO CONTRIBUYENTE EN ESTADOS UNIDOS DE NORTE AMeRICA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_beneficiario_nacionalidad_residente_usa ENUM('Y','N') NULL COMMENT 'SOLICITANTE FATCA ¿EL(LOS) BENEFICIARIO(S) DE LA CUENTA ES(SON) DE NACIONALIDAD ESTADOUNIDENSE O RESIDENTE(S) EN E.E.U.U. PARA EFECTOS IMPOSITIVOS?';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_beneficiario_1_primer_apellido VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA BENEFICIARIO 1 PRIMER APELLIDO';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_fatca_beneficiario_1_segundo_apellido VARCHAR(75) NULL COMMENT 'SOLICITANTE FATCA BENEFICIARIO 1 SEGUNDO APELLIDO';
@@ -424,13 +424,13 @@ CREATE TABLE cliente_producto(
     producto INT UNSIGNED NOT NULL COMMENT 'FK ID DEL PRODUCTO',
     moneda INT UNSIGNED NULL COMMENT 'FK ID DE LA MONEDA',
     cobertura ENUM('LOCAL','INTERNACIONAL') NULL COMMENT 'INDICA EL NIVEL DE COBERTURA',
-    numero_cuenta INT UNSIGNED NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIÓN DEL PRODUCTO O SERVICIO',
+    numero_cuenta INT UNSIGNED NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIoN DEL PRODUCTO O SERVICIO',
     monto_inicial decimal(10,2) UNSIGNED NULL COMMENT 'MONTO INICIAL A MANEJAR EN EL PRODUCTO O SERVICIO',
     monto_mensual decimal(10,2) UNSIGNED NULL COMMENT 'MONTO MENSUAL A MANEJAR EN EL PRODUCTO O SERVICIO',
-    proposito_destino VARCHAR(75) NULL COMMENT 'PROPÓSITO O DESTINO DEL PRODUCTO O SERVICIO SOLICITADO',
-    realizara_tranferencias ENUM('Y','N') NULL COMMENT 'REALIZARÁ TRANSFERENCIAS O TRASLADOS DE FONDOS, VALORES O BIENES',
+    proposito_destino VARCHAR(75) NULL COMMENT 'PROPoSITO O DESTINO DEL PRODUCTO O SERVICIO SOLICITADO',
+    realizara_tranferencias ENUM('Y','N') NULL COMMENT 'REALIZARa TRANSFERENCIAS O TRASLADOS DE FONDOS, VALORES O BIENES',
     realizara_tranferencias_nivel ENUM('LOCAL','INTERNACIONAL') NULL COMMENT 'LAS TRANSFERENCIAS O TRASLADO DE FONDOS, VALORES SE REALIZARAN A NIVEL',
-    tendra_otros_firmantes ENUM('Y','N') NULL COMMENT 'TENDRÁ OTROS FIRMANTES',
+    tendra_otros_firmantes ENUM('Y','N') NULL COMMENT 'TENDRa OTROS FIRMANTES',
     comentarios TEXT NULL COMMENT 'COMENTARIOS U OBSERVACIONES O CAMPOS ADICIONALES DE LA PERSONA OBLIGADA',
     add_user INT(10) UNSIGNED NOT NULL COMMENT 'FK ID DEL USUARIO QUE INSERTO LA TUPLA',
     add_fecha DATETIME NOT NULL COMMENT 'FECHA EN LA QUE SE INSERTO LA TUPLA',
@@ -716,13 +716,13 @@ ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_comentarios TE
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_revision_aprobacion_nombre VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE REVISION Y APROBACION NOMBRE ASESOR';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_revision_aprobacion_puesto VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE REVISION Y APROBACION PUESTO ASESOR';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_declaracion_accionaria_mas_25_capital ENUM('Y','N') NULL COMMENT 'SOLICITANTE DECLARACION ACCIONARIA DE PERSONAS INDIVIDUALES TENGO MAS DEL 25% DE PARTICIPACION DE CAPITAL EN OTRAS SOCIEDADES';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_declaracion_accionaria_ejerzo_cargo_otras_juridicas ENUM('Y','N') NULL COMMENT 'SOLICITANTE DECLARACION ACCIONARIA DE PERSONAS INDIVIDUALES EJERZO ALGÚN CARGO DE ADMINISTRACIÓN EN OTRAS PERSONAS JURÍDICAS';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_declaracion_accionaria_ejerzo_cargo_otras_juridicas ENUM('Y','N') NULL COMMENT 'SOLICITANTE DECLARACION ACCIONARIA DE PERSONAS INDIVIDUALES EJERZO ALGuN CARGO DE ADMINISTRACIoN EN OTRAS PERSONAS JURiDICAS';
 
 CREATE TABLE cliente_individual_declaracion_accionaria_participacion_capital(
     cliente_individual_declaracion_accionaria_participacion_capital INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'PK ID QUE IDENTIFICA EL REGISTRO EN LA TABLA',
     cliente INT UNSIGNED NOT NULL COMMENT 'FK ID DEL CLIENTE',
-    razon_social VARCHAR(75) NULL COMMENT 'RAZÓN O DENOMINACIÓN SOCIAL',
-    porcentaje_participacion TINYINT NULL COMMENT 'PORCENTAJE DE INVERSIÓN Y/O PARTICIPACIÓN',
+    razon_social VARCHAR(75) NULL COMMENT 'RAZoN O DENOMINACIoN SOCIAL',
+    porcentaje_participacion TINYINT NULL COMMENT 'PORCENTAJE DE INVERSIoN Y/O PARTICIPACIoN',
     add_user INT(10) UNSIGNED NOT NULL COMMENT 'FK ID DEL USUARIO QUE INSERTO LA TUPLA',
     add_fecha DATETIME NOT NULL COMMENT 'FECHA EN LA QUE SE INSERTO LA TUPLA',
     mod_user INT(10) UNSIGNED NULL COMMENT 'FK ID DEL USUARIO QUE MODIFICO LA TUPLA',
@@ -748,7 +748,7 @@ CREATE TABLE cliente_individual_declaracion_accionaria_cargo(
     CONSTRAINT cli_ind_dec_acc_car_mod_use_f FOREIGN KEY (mod_user) REFERENCES persona (persona) ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
-ALTER TABLE empresa ADD giin VARCHAR(75) NOT NULL COMMENT 'CÓDIGO DE LA PERSONA OBLIGADA GIIN' AFTER nombre;
+ALTER TABLE empresa ADD giin VARCHAR(75) NOT NULL COMMENT 'CoDIGO DE LA PERSONA OBLIGADA GIIN' AFTER nombre;
 
 #Abdias
 CREATE TABLE cliente_juridico_solicitante(
@@ -758,7 +758,7 @@ CREATE TABLE cliente_juridico_solicitante(
     agencia INT UNSIGNED NULL COMMENT 'FK ID DE LA AGENCIA',
     tipo_sociedad ENUM('ANONIMA','ONG_O_ASOCIACION','INSTITUCION_O_ENTIDAD_PUBLICA','INSTITUCION_FINANCIERA','OTRA') NULL COMMENT 'TIPO DE SOCIEDAD O ENTIDAD',
     tipo_sociedad_otra VARCHAR(75) NULL COMMENT 'OTRO TIPO DE SOCIEDAD O ENTIDAD',
-    nombre_razon_social VARCHAR(255) NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZÓN SOCIAL DE LA ENTIDAD',
+    nombre_razon_social VARCHAR(255) NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZoN SOCIAL DE LA ENTIDAD',
     nombre_comercial VARCHAR(255) NULL COMMENT 'NOMBRE COMERCIAL',
     actividad_economica VARCHAR(255) NULL COMMENT 'ACTIVIDAD ECONOMICA PRINCIPAL O OBJETO DE LA ENTIDAD',
     nit VARCHAR(10) NULL COMMENT 'NUMERO DE IDENTIFICACION TRIBUTARIA DEL SOLICITANTE',
@@ -1164,14 +1164,14 @@ ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_procedencia_ef
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_procedencia_otro_especifique VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE PROCEDENCIA DE LOS FONDOS OTRO ESPECIFIQUE';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_origen_otros_especifique VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE ORIGEN DE LOS RECURSOS OTROS ESPECIFIQUE';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_tipo_persona ENUM('INDIVIDUAL','JURIDICA') NULL COMMENT 'SOLICITANTE ACTUA EN NOMBRE PROPIO TIPO DE PERSONA';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_fecha_constitucion DATE NULL COMMENT 'FECHA DE CREACIÓN O CONSTITUCIÓN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_constitucion_pais SMALLINT UNSIGNED NULL COMMENT 'FK ID DEL PAIS, PAÍS DE CONSTITUCION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_fecha_constitucion DATE NULL COMMENT 'FECHA DE CREACIoN O CONSTITUCIoN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_constitucion_pais SMALLINT UNSIGNED NULL COMMENT 'FK ID DEL PAIS, PAiS DE CONSTITUCION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_nit_juridica VARCHAR(10) NULL COMMENT 'NUMERO DE IDENTIFICACION TRIBUTARIA JURIDICA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_telefono_linea_fija_juridica VARCHAR(8) NULL COMMENT 'TELEFONO LINEA FIJA JURIDICA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_actua_telefono_celular_juridica VARCHAR(8) NULL COMMENT 'TELEFONO CELULAR O MOVIL JURIDICA DEL SOLICITANTE';
 
 ALTER TABLE cliente_juridico_solicitante ADD tipo_persona_beneficio ENUM('INDIVIDUAL','JURIDICA') NULL COMMENT 'TIPO DE PERSONA DEL QUE ACTUA EN BENEFICIO';
-ALTER TABLE cliente_juridico_solicitante ADD fecha_constitucion_beneficio DATE NULL COMMENT 'FECHA DE CREACIÓN O CONSTITUCIÓN DEL QUE ACTUA EN BENEFICIO';
+ALTER TABLE cliente_juridico_solicitante ADD fecha_constitucion_beneficio DATE NULL COMMENT 'FECHA DE CREACIoN O CONSTITUCIoN DEL QUE ACTUA EN BENEFICIO';
 ALTER TABLE cliente_juridico_solicitante ADD pais_constitucion_beneficio SMALLINT UNSIGNED NULL COMMENT 'FK PAIS, PAIS DE CONSTITUCION DEL QUE ACTUA EN BENEFICIO';
 ALTER TABLE cliente_juridico_solicitante ADD nit_juridica_beneficio VARCHAR(100) NULL COMMENT 'NIT JURIDICA DE LA PERSONA QUE ACTUA EN BENEFICIO';
 ALTER TABLE cliente_juridico_solicitante ADD telefono_linea_fija_juridica_beneficio VARCHAR(100) NULL COMMENT 'TELEFONO JURIDICA DE LA PERSONA QUE ACTUA EN BENEFICIO';
@@ -1288,8 +1288,8 @@ ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_tipo_persona_s
 ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_tipo_persona_sociedad_anonima ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA SOCIEDAD ANONIMA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_tipo_persona_cooperativa ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA COOPERATIVA';
 ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_tipo_persona_cooperativa ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA COOPERATIVA';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_tipo_persona_fundacion ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIÓN';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_tipo_persona_fundacion ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIÓN';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_tipo_persona_fundacion ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIoN';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_tipo_persona_fundacion ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIoN';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_tipo_persona_offshore ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OFFSHORE';
 ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_tipo_persona_offshore ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OFFSHORE';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_tipo_persona_fideicomiso ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FIDEICOMISO';
@@ -1302,20 +1302,20 @@ ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_empresa_labora
 ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_empresa_labora VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE EMPRESA EN LA QUE LABORA';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_antiguedad VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE ANTIGUEDAD';
 ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_antiguedad VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE ANTIGUEDAD';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_operacion_negocio VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIÓN DEL NEGOCIO';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_operacion_negocio VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIÓN DEL NEGOCIO';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_propietario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN PROPIETARIO';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_propietario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN PROPIETARIO';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_empleado ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPLEADO';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_empleado ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPLEADO';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_inversionista ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN INVERSIONISTA';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_inversionista ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN INVERSIONISTA';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_directivo ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN DIRECTIVO';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_directivo ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN DIRECTIVO';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_empresario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPRESARIO';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_empresario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPRESARIO';
-ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_direccion_notificacion VARCHAR(255) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIÓN DE NOTIFICACIÓN';
-ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_direccion_notificacion VARCHAR(255) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIÓN DE NOTIFICACIÓN';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_operacion_negocio VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIoN DEL NEGOCIO';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_operacion_negocio VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIoN DEL NEGOCIO';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_propietario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN PROPIETARIO';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_propietario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN PROPIETARIO';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_empleado ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPLEADO';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_empleado ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPLEADO';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_inversionista ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN INVERSIONISTA';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_inversionista ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN INVERSIONISTA';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_directivo ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN DIRECTIVO';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_directivo ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN DIRECTIVO';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_posicion_empresario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPRESARIO';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_posicion_empresario ENUM('Y','N') NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPRESARIO';
+ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_direccion_notificacion VARCHAR(255) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIoN DE NOTIFICACIoN';
+ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_direccion_notificacion VARCHAR(255) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIoN DE NOTIFICACIoN';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_telefonos VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TELEFONOS';
 ALTER TABLE cliente_juridico_solicitante ADD solicitante_conoce_telefonos VARCHAR(75) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TELEFONOS';
 ALTER TABLE cliente_individual_solicitante ADD solicitante_conoce_correo_electronico VARCHAR(320) NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE EMAIL';
@@ -1387,7 +1387,7 @@ INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (8,
 INSERT INTO acceso_tipo_permitido (acceso,tipo_acceso) VALUES (8,1);
 
 INSERT INTO acceso (acceso,modulo,codigo,orden,acceso_pertenece,path,publico,privado,activo,add_user,add_fecha,acceso_extra) VALUES (9,3,'clientes_consulta_cliente_revision_documentos',2,7,NULL,'N','Y','Y',1,NOW(),'Y');
-INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (9,1,'Revisión de documentos','Revisión de documentos');
+INSERT INTO acceso_idioma (acceso,idioma,nombre_menu,nombre_pantalla) VALUES (9,1,'Revision de documentos','Revision de documentos');
 INSERT INTO acceso_tipo_permitido (acceso,tipo_acceso) VALUES (9,1);
 
 INSERT INTO acceso (acceso,modulo,codigo,orden,acceso_pertenece,path,publico,privado,activo,add_user,add_fecha,acceso_extra) VALUES (10,3,'clientes_consulta_cliente_unidad_cumplimiento',3,7,NULL,'N','Y','Y',1,NOW(),'Y');
@@ -1530,11 +1530,11 @@ UPDATE acceso_idioma SET nombre_menu = 'Pendientes de autorizar', nombre_pantall
 INSERT INTO cliente_estado_tiempo (estado, intervalo, unidad, add_user, add_fecha, mod_user, mod_fecha) VALUES ('PENDIENTE_FIRMAS', '365', 'DAY', '1', NOW(), NULL, NULL);
 
 
-ALTER TABLE cliente_transaccion ADD no_cuenta_cvn VARCHAR( 75 ) NULL COMMENT 'NÚMERO DE CUENTA CVN' AFTER cuenta_custodia;
-ALTER TABLE cliente_transaccion ADD no_boleta_deposito VARCHAR( 75 ) NULL COMMENT 'NÚMERO DE CUENTA DE DEPOSITO' AFTER no_cuenta_cvn;
-ALTER TABLE cliente_transaccion ADD no_cuenta_terceros VARCHAR( 75 ) NULL COMMENT 'NÚMERO DE CUENTA TERCEROS' AFTER no_boleta_deposito;
+ALTER TABLE cliente_transaccion ADD no_cuenta_cvn VARCHAR( 75 ) NULL COMMENT 'NuMERO DE CUENTA CVN' AFTER cuenta_custodia;
+ALTER TABLE cliente_transaccion ADD no_boleta_deposito VARCHAR( 75 ) NULL COMMENT 'NuMERO DE CUENTA DE DEPOSITO' AFTER no_cuenta_cvn;
+ALTER TABLE cliente_transaccion ADD no_cuenta_terceros VARCHAR( 75 ) NULL COMMENT 'NuMERO DE CUENTA TERCEROS' AFTER no_boleta_deposito;
 
-ALTER TABLE moneda ADD no_cuenta_terceros VARCHAR( 75 ) NULL COMMENT 'NÚMERO DE CUENTA TERCEROS' AFTER activo;
+ALTER TABLE moneda ADD no_cuenta_terceros VARCHAR( 75 ) NULL COMMENT 'NuMERO DE CUENTA TERCEROS' AFTER activo;
 UPDATE moneda SET no_cuenta_terceros = 'Q-66-0020127-7' WHERE moneda = 1;
 UPDATE moneda SET no_cuenta_terceros = '$-66-5806550-0' WHERE moneda = 2;
 
@@ -1817,8 +1817,8 @@ CREATE TABLE cliente_individual_declaracion_acc_par_capital_historico (
   cliente_historico INT UNSIGNED NOT NULL COMMENT 'FK ID DEL CLIENTE HISTORICO',
   cliente_individual_declaracion_acc_par_capital int(10) unsigned NOT NULL COMMENT 'PK ID QUE IDENTIFICA EL REGISTRO EN LA TABLA',
   cliente int(10) unsigned NOT NULL COMMENT 'FK ID DEL CLIENTE',
-  razon_social varchar(75) NOT NULL COMMENT 'RAZÓN O DENOMINACIÓN SOCIAL',
-  porcentaje_participacion tinyint(4) DEFAULT NULL COMMENT 'PORCENTAJE DE INVERSIÓN Y/O PARTICIPACIÓN',
+  razon_social varchar(75) NOT NULL COMMENT 'RAZoN O DENOMINACIoN SOCIAL',
+  porcentaje_participacion tinyint(4) DEFAULT NULL COMMENT 'PORCENTAJE DE INVERSIoN Y/O PARTICIPACIoN',
   add_user int(10) unsigned NOT NULL COMMENT 'FK ID DEL USUARIO QUE INSERTO LA TUPLA',
   add_fecha datetime NOT NULL COMMENT 'FECHA EN LA QUE SE INSERTO LA TUPLA',
   mod_user int(10) unsigned DEFAULT NULL COMMENT 'FK ID DEL USUARIO QUE MODIFICO LA TUPLA',
@@ -1870,7 +1870,7 @@ CREATE TABLE cliente_individual_solicitante_historico (
   solicitante_beneficiario_tiene enum('Y','N') NOT NULL COMMENT 'INDICA SI EL SOLICITANTE TIENE BENEFICIARIOS O NO',
   solicitante_beneficiario_numero tinyint(4) DEFAULT NULL COMMENT 'NUMERO DE BENEFICIARIOS DEL SOLICITANTE',
   solicitante_actua_nombre_propio enum('Y','N') NOT NULL COMMENT 'INDICA SI EL SOLICITANTE ACTUA EN NOMBRE PROPIO',
-  solicitante_actua_nombre_completo varchar(255) DEFAULT NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZÓN SOCIAL DE LA ENTIDAD',
+  solicitante_actua_nombre_completo varchar(255) DEFAULT NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZoN SOCIAL DE LA ENTIDAD',
   solicitante_actua_primer_apellido varchar(75) DEFAULT NULL COMMENT 'PRIMER APELLIDO DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_segundo_apellido varchar(75) DEFAULT NULL COMMENT 'SEGUNDO APELLIDO DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_apellido_casada varchar(75) DEFAULT NULL COMMENT 'APELLIDO DE CASADA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
@@ -1878,14 +1878,14 @@ CREATE TABLE cliente_individual_solicitante_historico (
   solicitante_actua_segundo_nombre varchar(75) DEFAULT NULL COMMENT 'SEGUNDO NOMBRE DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_otros_nombres varchar(75) DEFAULT NULL COMMENT 'OTROS NOMBRES DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_genero enum('M','F') DEFAULT NULL COMMENT 'GENERO DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
-  solicitante_actua_razon_social varchar(255) DEFAULT NULL COMMENT 'RAZÓN SOCIAL O NOMBRE COMERCIAL DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
-  solicitante_actua_fecha_nacimiento date DEFAULT NULL COMMENT 'FECHA DE NACIMIENTO, CREACIÓN O CONSTITUCIÓN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
-  solicitante_actua_nacionalidad smallint(5) unsigned DEFAULT NULL COMMENT 'FK ID DEL PAIS, PAÍS DE CONSTITUCIÓN O NACIONALIDAD DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+  solicitante_actua_razon_social varchar(255) DEFAULT NULL COMMENT 'RAZoN SOCIAL O NOMBRE COMERCIAL DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+  solicitante_actua_fecha_nacimiento date DEFAULT NULL COMMENT 'FECHA DE NACIMIENTO, CREACIoN O CONSTITUCIoN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+  solicitante_actua_nacionalidad smallint(5) unsigned DEFAULT NULL COMMENT 'FK ID DEL PAIS, PAiS DE CONSTITUCIoN O NACIONALIDAD DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_otra_nacionalidad smallint(5) unsigned DEFAULT NULL COMMENT 'FK ID DEL PAIS, OTRA NACIONALIDAD DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_identificacion_tipo enum('DPI','PASAPORTE') DEFAULT NULL COMMENT 'TIPO DE IDENTIFICACION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_identificacion_numero varchar(75) DEFAULT NULL COMMENT 'NUMERO DE IDENTIFICACION EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_identificacion_lugar_emision varchar(75) DEFAULT NULL COMMENT 'LUGAR DE EMISION DE IDENTIFICACION EN NOMBRE DE QUIEN ACTUA',
-  solicitante_actua_identificacion_pais smallint(5) unsigned DEFAULT NULL COMMENT 'FK ID DEL PAIS, PAÍS DE LA IDENTIFICACION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+  solicitante_actua_identificacion_pais smallint(5) unsigned DEFAULT NULL COMMENT 'FK ID DEL PAIS, PAiS DE LA IDENTIFICACION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_nit varchar(10) DEFAULT NULL COMMENT 'NUMERO DE IDENTIFICACION TRIBUTARIA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_telefono_linea_fija varchar(75) DEFAULT NULL COMMENT 'TELEFONO LINEA FIJA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_telefono_celular varchar(75) DEFAULT NULL COMMENT 'TELEFONO CELULAR O MOVIL DEL SOLICITANTE',
@@ -1961,28 +1961,28 @@ CREATE TABLE cliente_individual_solicitante_historico (
   solicitante_eco_moneda_ingresos_mensuales int(10) unsigned DEFAULT NULL COMMENT 'SOLICITANTE INFORMACION ECONOMICA MONEDA DE INGRESOS MENSUALES APROXIMADOS',
   solicitante_eco_rango_egresos_mensuales enum('0.00 - 3,000.00','3,000.01 - 10,000.00','10,000.01 - 25,000.00','25,000.01 - 50,000.00','50,000.01 - en adelante') DEFAULT NULL COMMENT 'SOLICITANTE INFORMACION ECONOMICA EGRESOS MENSUALES APROXIMADOS',
   solicitante_eco_moneda_egresos_mensuales int(10) unsigned DEFAULT NULL COMMENT 'SOLICITANTE INFORMACION ECONOMICA MONEDA DE EGRESOS MENSUALES APROXIMADOS',
-  solicitante_fatca_anexo_numero varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA ANEXO NÚMERO',
-  solicitante_fatca_giin varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA CÓDIGO DE LA PERSONA OBLIGADA GIIN',
-  solicitante_fatca_pasaporte_numero varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA NÚMERO DE PASAPORTE',
-  solicitante_fatca_pasaporte_pais smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA PAÍS DE EMISION DE PASAPORTE',
+  solicitante_fatca_anexo_numero varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA ANEXO NuMERO',
+  solicitante_fatca_giin varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA CoDIGO DE LA PERSONA OBLIGADA GIIN',
+  solicitante_fatca_pasaporte_numero varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA NuMERO DE PASAPORTE',
+  solicitante_fatca_pasaporte_pais smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA PAiS DE EMISION DE PASAPORTE',
   solicitante_fatca_pasaporte_fecha_vencimiento date DEFAULT NULL COMMENT 'SOLICITANTE FATCA FECHA DE VENCIMIENTO DEL PASAPORTE',
   solicitante_fatca_ssn_tin int(10) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA SOCIAL SECURITY NUMBER O TAX ID NUMBER',
   solicitante_fatca_green_card_number int(10) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA GREEN CARD NUMBER',
   solicitante_fatca_green_card_fecha_vencimiento date DEFAULT NULL COMMENT 'SOLICITANTE FATCA GREEN CARD NUMBER FECHA DE VENCIMIENTO',
   solicitante_fatca_direccion_exterior varchar(255) DEFAULT NULL COMMENT 'SOLICITANTE FATCA DIRECCION DE DOMICILIO EN EL EXTERIOR',
-  solicitante_fatca_pais_residencia smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA PAÍS DE RESIDENCIA',
-  solicitante_fatca_pais_ciudadania smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA PAÍS DE CIUDADANIA',
+  solicitante_fatca_pais_residencia smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA PAiS DE RESIDENCIA',
+  solicitante_fatca_pais_ciudadania smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA PAiS DE CIUDADANIA',
   solicitante_fatca_es_cliente_fatca enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA ES CLIENTE FATCA',
   solicitante_fatca_posee_otras_nacionalidades enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA POSEE OTRAS NACIONALIDADES',
   solicitante_fatca_otra_nacionalidad_pais smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE FATCA OTRA NACIONALIDAD PAIS',
-  solicitante_fatca_pemanencia_mayor_183_dias_usa enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA HA PERMANECIDO EN LOS ESTADOS UNIDOS DE NORTE AMERICA POR UN PERÍODO MAYOR  DE 183 DÍAS',
+  solicitante_fatca_pemanencia_mayor_183_dias_usa enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA HA PERMANECIDO EN LOS ESTADOS UNIDOS DE NORTE AMERICA POR UN PERiODO MAYOR  DE 183 DiAS',
   solicitante_fatca_transfiere_fondos_usa enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA TRANSFIERE FONDOS A LOS ESTADOS UNIDOS',
   solicitante_fatca_recibe_fondos_usa enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA RECIBE FONDOS DE LOS ESTADOS UNIDOS',
   solicitante_fatca_forma_w8ben enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA FORMA W8BEN',
   solicitante_fatca_forma_w8ben_fecha date DEFAULT NULL COMMENT 'SOLICITANTE FATCA FECHA DE LA FORMA W8BEN',
   solicitante_fatca_forma_w9 enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA FORMA W9',
   solicitante_fatca_forma_w9_fecha date DEFAULT NULL COMMENT 'SOLICITANTE FATCA FECHA DE LA FORMA W9',
-  solicitante_fatca_cuenta_vinculo_contribuyente enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA CUENTA CON ALGUN VINCULO COMO CONTRIBUYENTE EN ESTADOS UNIDOS DE NORTE AMÉRICA',
+  solicitante_fatca_cuenta_vinculo_contribuyente enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA CUENTA CON ALGUN VINCULO COMO CONTRIBUYENTE EN ESTADOS UNIDOS DE NORTE AMeRICA',
   solicitante_fatca_beneficiario_nacionalidad_residente_usa enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE FATCA ¿EL(LOS) BENEFICIARIO(S) DE LA CUENTA ES(SON) DE NACIONALIDAD ESTADOUNIDENSE O RESIDENTE(S) EN E.E.U.U. PARA EFECTOS IMPOSITIVOS?',
   solicitante_fatca_beneficiario_1_primer_apellido varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA BENEFICIARIO 1 PRIMER APELLIDO',
   solicitante_fatca_beneficiario_1_segundo_apellido varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE FATCA BENEFICIARIO 1 SEGUNDO APELLIDO',
@@ -2034,13 +2034,13 @@ CREATE TABLE cliente_individual_solicitante_historico (
   solicitante_conoce_revision_aprobacion_nombre varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE REVISION Y APROBACION NOMBRE ASESOR',
   solicitante_conoce_revision_aprobacion_puesto varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE REVISION Y APROBACION PUESTO ASESOR',
   solicitante_declaracion_accionaria_mas_25_capital enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE DECLARACION ACCIONARIA DE PERSONAS INDIVIDUALES TENGO MAS DEL 25% DE PARTICIPACION DE CAPITAL EN OTRAS SOCIEDADES',
-  solicitante_declaracion_accionaria_ejerzo_cargo_otras_juridicas enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE DECLARACION ACCIONARIA DE PERSONAS INDIVIDUALES EJERZO ALGÚN CARGO DE ADMINISTRACIÓN EN OTRAS PERSONAS JURÍDICAS',
+  solicitante_declaracion_accionaria_ejerzo_cargo_otras_juridicas enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE DECLARACION ACCIONARIA DE PERSONAS INDIVIDUALES EJERZO ALGuN CARGO DE ADMINISTRACIoN EN OTRAS PERSONAS JURiDICAS',
   solicitante_conoce_procedencia_efectivo enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE PROCEDENCIA DE LOS FONDOS EFECTIVO',
   solicitante_conoce_procedencia_otro_especifique varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE PROCEDENCIA DE LOS FONDOS OTRO ESPECIFIQUE',
   solicitante_conoce_origen_otros_especifique varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE ORIGEN DE LOS RECURSOS OTROS ESPECIFIQUE',
   solicitante_actua_tipo_persona enum('INDIVIDUAL','JURIDICA') DEFAULT NULL COMMENT 'ISOLICITANTE ACTUA EN NOMBRE PROPIO TIPO DE PERSONA',
-  solicitante_actua_fecha_constitucion date DEFAULT NULL COMMENT 'FECHA DE CREACIÓN O CONSTITUCIÓN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
-  solicitante_actua_constitucion_pais smallint(5) unsigned DEFAULT NULL COMMENT 'FK ID DEL PAIS, PAÍS DE CONSTITUCION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+  solicitante_actua_fecha_constitucion date DEFAULT NULL COMMENT 'FECHA DE CREACIoN O CONSTITUCIoN DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
+  solicitante_actua_constitucion_pais smallint(5) unsigned DEFAULT NULL COMMENT 'FK ID DEL PAIS, PAiS DE CONSTITUCION DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_nit_juridica varchar(10) DEFAULT NULL COMMENT 'NUMERO DE IDENTIFICACION TRIBUTARIA JURIDICA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_telefono_linea_fija_juridica varchar(75) DEFAULT NULL COMMENT 'TELEFONO LINEA FIJA JURIDICA DE LA PERSONA EN NOMBRE DE QUIEN ACTUA',
   solicitante_actua_telefono_celular_juridica varchar(75) DEFAULT NULL COMMENT 'TELEFONO CELULAR O MOVIL JURIDICA DEL SOLICITANTE',
@@ -2049,20 +2049,20 @@ CREATE TABLE cliente_individual_solicitante_historico (
   solicitante_conoce_tipo_persona_comerciante_individual enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA COMERCIANTE INDIVIDUAL',
   solicitante_conoce_tipo_persona_sociedad_anonima enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA SOCIEDAD ANONIMA',
   solicitante_conoce_tipo_persona_cooperativa enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA COOPERATIVA',
-  solicitante_conoce_tipo_persona_fundacion enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIÓN',
+  solicitante_conoce_tipo_persona_fundacion enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIoN',
   solicitante_conoce_tipo_persona_offshore enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OFFSHORE',
   solicitante_conoce_tipo_persona_fideicomiso enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FIDEICOMISO',
   solicitante_conoce_tipo_persona_otro enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OTRO',
   solicitante_conoce_tipo_persona_otro_especifique varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OTRO ESPECIFIQUE',
   solicitante_conoce_empresa_labora varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE EMPRESA EN LA QUE LABORA',
   solicitante_conoce_antiguedad varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE ANTIGUEDAD',
-  solicitante_conoce_operacion_negocio varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIÓN DEL NEGOCIO',
-  solicitante_conoce_posicion_propietario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN PROPIETARIO',
-  solicitante_conoce_posicion_empleado enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPLEADO',
-  solicitante_conoce_posicion_inversionista enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN INVERSIONISTA',
-  solicitante_conoce_posicion_directivo enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN DIRECTIVO',
-  solicitante_conoce_posicion_empresario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPRESARIO',
-  solicitante_conoce_direccion_notificacion varchar(255) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIÓN DE NOTIFICACIÓN',
+  solicitante_conoce_operacion_negocio varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIoN DEL NEGOCIO',
+  solicitante_conoce_posicion_propietario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN PROPIETARIO',
+  solicitante_conoce_posicion_empleado enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPLEADO',
+  solicitante_conoce_posicion_inversionista enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN INVERSIONISTA',
+  solicitante_conoce_posicion_directivo enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN DIRECTIVO',
+  solicitante_conoce_posicion_empresario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPRESARIO',
+  solicitante_conoce_direccion_notificacion varchar(255) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIoN DE NOTIFICACIoN',
   solicitante_conoce_telefonos varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TELEFONOS',
   solicitante_conoce_correo_electronico varchar(320) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE EMAIL',
   solicitante_conoce_fuente_ingreso_salario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE PRINCIPAL FUENTE DE INGRESOS SALARIO',
@@ -2211,7 +2211,7 @@ CREATE TABLE cliente_juridico_solicitante_historico (
   agencia int(10) unsigned DEFAULT NULL COMMENT 'FK ID DE LA AGENCIA',
   tipo_sociedad enum('ANONIMA','ONG_O_ASOCIACION','INSTITUCION_O_ENTIDAD_PUBLICA','INSTITUCION_FINANCIERA','OTRA') DEFAULT NULL COMMENT 'TIPO DE SOCIEDAD O ENTIDAD',
   tipo_sociedad_otra varchar(75) DEFAULT NULL COMMENT 'OTRO TIPO DE SOCIEDAD O ENTIDAD',
-  nombre_razon_social varchar(255) DEFAULT NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZÓN SOCIAL DE LA ENTIDAD',
+  nombre_razon_social varchar(255) DEFAULT NULL COMMENT 'NOMBRE COMPLETO DE LA PERSONA Y/O RAZoN SOCIAL DE LA ENTIDAD',
   nombre_comercial varchar(255) DEFAULT NULL COMMENT 'NOMBRE COMERCIAL',
   actividad_economica varchar(255) DEFAULT NULL COMMENT 'ACTIVIDAD ECONOMICA PRINCIPAL O OBJETO DE LA ENTIDAD',
   nit varchar(10) DEFAULT NULL COMMENT 'NUMERO DE IDENTIFICACION TRIBUTARIA DEL SOLICITANTE',
@@ -2351,7 +2351,7 @@ CREATE TABLE cliente_juridico_solicitante_historico (
   pep_asociado_puesto varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE ES ASOCIADO CERCANO CON UNA PERSONA EXPUESTA POLITICAMENTE PUESTO',
   pep_asociado_pais smallint(5) unsigned DEFAULT NULL COMMENT 'SOLICITANTE ES ASOCIADO CERCANO CON UNA PERSONA EXPUESTA POLITICAMENTE PAIS INSTITUCION',
   tipo_persona_beneficio enum('INDIVIDUAL','JURIDICA') DEFAULT NULL COMMENT 'TIPO DE PERSONA DEL QUE ACTUA EN BENEFICIO',
-  fecha_constitucion_beneficio date DEFAULT NULL COMMENT 'FECHA DE CREACIÓN O CONSTITUCIÓN DEL QUE ACTUA EN BENEFICIO',
+  fecha_constitucion_beneficio date DEFAULT NULL COMMENT 'FECHA DE CREACIoN O CONSTITUCIoN DEL QUE ACTUA EN BENEFICIO',
   pais_constitucion_beneficio smallint(5) unsigned DEFAULT NULL COMMENT 'FK PAIS, PAIS DE CONSTITUCION DEL QUE ACTUA EN BENEFICIO',
   nit_juridica_beneficio varchar(100) DEFAULT NULL COMMENT 'NIT JURIDICA DE LA PERSONA QUE ACTUA EN BENEFICIO',
   telefono_linea_fija_juridica_beneficio varchar(100) DEFAULT NULL COMMENT 'TELEFONO JURIDICA DE LA PERSONA QUE ACTUA EN BENEFICIO',
@@ -2398,20 +2398,20 @@ CREATE TABLE cliente_juridico_solicitante_historico (
   solicitante_conoce_tipo_persona_comerciante_individual enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA COMERCIANTE INDIVIDUAL',
   solicitante_conoce_tipo_persona_sociedad_anonima enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA SOCIEDAD ANONIMA',
   solicitante_conoce_tipo_persona_cooperativa enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA COOPERATIVA',
-  solicitante_conoce_tipo_persona_fundacion enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIÓN',
+  solicitante_conoce_tipo_persona_fundacion enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FUNDACIoN',
   solicitante_conoce_tipo_persona_offshore enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OFFSHORE',
   solicitante_conoce_tipo_persona_fideicomiso enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA FIDEICOMISO',
   solicitante_conoce_tipo_persona_otro enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OTRO',
   solicitante_conoce_tipo_persona_otro_especifique varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TIPO PERSONA OTRO ESPECIFIQUE',
   solicitante_conoce_empresa_labora varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE EMPRESA EN LA QUE LABORA',
   solicitante_conoce_antiguedad varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE ANTIGUEDAD',
-  solicitante_conoce_operacion_negocio varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIÓN DEL NEGOCIO',
-  solicitante_conoce_posicion_propietario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN PROPIETARIO',
-  solicitante_conoce_posicion_empleado enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPLEADO',
-  solicitante_conoce_posicion_inversionista enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN INVERSIONISTA',
-  solicitante_conoce_posicion_directivo enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN DIRECTIVO',
-  solicitante_conoce_posicion_empresario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIÓN EMPRESARIO',
-  solicitante_conoce_direccion_notificacion varchar(255) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIÓN DE NOTIFICACIÓN',
+  solicitante_conoce_operacion_negocio varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DESCRIPCION DE LA OPERACIoN DEL NEGOCIO',
+  solicitante_conoce_posicion_propietario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN PROPIETARIO',
+  solicitante_conoce_posicion_empleado enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPLEADO',
+  solicitante_conoce_posicion_inversionista enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN INVERSIONISTA',
+  solicitante_conoce_posicion_directivo enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN DIRECTIVO',
+  solicitante_conoce_posicion_empresario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE POSICIoN EMPRESARIO',
+  solicitante_conoce_direccion_notificacion varchar(255) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE DIRECCIoN DE NOTIFICACIoN',
   solicitante_conoce_telefonos varchar(75) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE TELEFONOS',
   solicitante_conoce_correo_electronico varchar(320) DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE EMAIL',
   solicitante_conoce_fuente_ingreso_salario enum('Y','N') DEFAULT NULL COMMENT 'SOLICITANTE CONOCE A TU CLIENTE PRINCIPAL FUENTE DE INGRESOS SALARIO',
@@ -2609,13 +2609,13 @@ CREATE TABLE cliente_producto_historico (
   producto int(10) unsigned NOT NULL COMMENT 'FK ID DEL PRODUCTO',
   moneda int(10) unsigned DEFAULT NULL COMMENT 'FK ID DE LA MONEDA',
   cobertura enum('LOCAL','INTERNACIONAL') DEFAULT NULL COMMENT 'INDICA EL NIVEL DE COBERTURA',
-  numero_cuenta int(10) unsigned DEFAULT NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIÓN DEL PRODUCTO O SERVICIO',
+  numero_cuenta int(10) unsigned DEFAULT NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIoN DEL PRODUCTO O SERVICIO',
   monto_inicial varchar(75) DEFAULT NULL COMMENT 'MONTO INICIAL A MANEJAR EN EL PRODUCTO O SERVICIO',
   monto_mensual varchar(75) DEFAULT NULL COMMENT 'MONTO MENSUAL A MANEJAR EN EL PRODUCTO O SERVICIO',
-  proposito_destino varchar(75) NOT NULL COMMENT 'PROPÓSITO O DESTINO DEL PRODUCTO O SERVICIO SOLICITADO',
-  realizara_tranferencias enum('Y','N') DEFAULT NULL COMMENT 'REALIZARÁ TRANSFERENCIAS O TRASLADOS DE FONDOS, VALORES O BIENES',
+  proposito_destino varchar(75) NOT NULL COMMENT 'PROPoSITO O DESTINO DEL PRODUCTO O SERVICIO SOLICITADO',
+  realizara_tranferencias enum('Y','N') DEFAULT NULL COMMENT 'REALIZARa TRANSFERENCIAS O TRASLADOS DE FONDOS, VALORES O BIENES',
   realizara_tranferencias_nivel enum('LOCAL','INTERNACIONAL') DEFAULT NULL COMMENT 'LAS TRANSFERENCIAS O TRASLADO DE FONDOS, VALORES SE REALIZARAN A NIVEL',
-  tendra_otros_firmantes enum('Y','N') DEFAULT NULL COMMENT 'TENDRÁ OTROS FIRMANTES',
+  tendra_otros_firmantes enum('Y','N') DEFAULT NULL COMMENT 'TENDRa OTROS FIRMANTES',
   comentarios text COMMENT 'COMENTARIOS U OBSERVACIONES O CAMPOS ADICIONALES DE LA PERSONA OBLIGADA',
   add_user int(10) unsigned NOT NULL COMMENT 'FK ID DEL USUARIO QUE INSERTO LA TUPLA',
   add_fecha datetime NOT NULL COMMENT 'FECHA EN LA QUE SE INSERTO LA TUPLA',
@@ -2716,7 +2716,7 @@ UPDATE cliente_estado_tiempo SET intervalo = 3 WHERE estado = 'POR_VENCER';
 SET GLOBAL event_scheduler = ON;
 
 
-UPDATE acceso_idioma SET nombre_menu = 'Revisión legal de documentos', nombre_pantalla = 'Revisión legal de documentos' WHERE acceso = 9 AND idioma = 1;
+UPDATE acceso_idioma SET nombre_menu = 'Revision legal de documentos', nombre_pantalla = 'Revision legal de documentos' WHERE acceso = 9 AND idioma = 1;
 UPDATE acceso_idioma SET nombre_menu = 'Unidad de cumplimiento', nombre_pantalla = 'Unidad de cumplimiento' WHERE acceso = 10 AND idioma = 1;
 UPDATE acceso_idioma SET nombre_menu = 'Pendientes de autorizar', nombre_pantalla = 'Pendientes de autorizar' WHERE acceso = 11 AND idioma = 1;
 
@@ -2732,7 +2732,7 @@ UPDATE acceso SET orden = '9' WHERE acceso = 15;
 UPDATE acceso SET orden = '10' WHERE acceso = 16;
 UPDATE acceso SET codigo = 'clientes_consulta_cliente_pendiente_autorizar' WHERE acceso = 11;
 
-ALTER TABLE cliente_producto_historico CHANGE proposito_destino proposito_destino VARCHAR( 75 ) NULL COMMENT 'PROPÓSITO O DESTINO DEL PRODUCTO O SERVICIO SOLICITADO';
+ALTER TABLE cliente_producto_historico CHANGE proposito_destino proposito_destino VARCHAR( 75 ) NULL COMMENT 'PROPoSITO O DESTINO DEL PRODUCTO O SERVICIO SOLICITADO';
 
 INSERT INTO configuracion (modulo,codigo,tipo_dato,valores,valor,add_user,add_fecha) VALUES (3,'globalCronJob','checkbox','true,false','true',1,NOW());
 INSERT INTO configuracion_idioma (modulo,codigo,idioma,nombre,descripcion) VALUES (3,'globalCronJob',1,'Indicador de cronjob','Esta variable indica que hay cronjob en este modulo');
@@ -2862,8 +2862,8 @@ ALTER TABLE cliente_individual_solicitante_historico ADD solicitante_eco_relacio
 ALTER TABLE cliente_individual_solicitante ADD solicitante_eco_relacion_ingresos DECIMAL(10,2) UNSIGNED NULL COMMENT 'SOLICITANTE INFORMACION ECONOMICA RELACION DEPENDENCIA INGRESOS';
 ALTER TABLE cliente_individual_solicitante_historico ADD solicitante_eco_relacion_ingresos DECIMAL(10,2) UNSIGNED NULL COMMENT 'SOLICITANTE INFORMACION ECONOMICA RELACION DEPENDENCIA INGRESOS';*/
 
-ALTER TABLE cliente_producto CHANGE numero_cuenta numero_cuenta VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIÓN DEL PRODUCTO O SERVICIO';
-ALTER TABLE cliente_producto_historico CHANGE numero_cuenta numero_cuenta VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIÓN DEL PRODUCTO O SERVICIO';
+ALTER TABLE cliente_producto CHANGE numero_cuenta numero_cuenta VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIoN DEL PRODUCTO O SERVICIO';
+ALTER TABLE cliente_producto_historico CHANGE numero_cuenta numero_cuenta VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'NO. DE CUENTA O DE IDENTIFICACIoN DEL PRODUCTO O SERVICIO';
 
 ALTER TABLE cliente_juridico_solicitante CHANGE numero_expediente_sociedad numero_expediente_sociedad VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'INDICA EL NUMERO DE EXPEDIENTE DE LA SOCIEDAD';
 ALTER TABLE cliente_juridico_solicitante_historico CHANGE numero_expediente_sociedad numero_expediente_sociedad VARCHAR( 75 ) NULL DEFAULT NULL COMMENT 'INDICA EL NUMERO DE EXPEDIENTE DE LA SOCIEDAD';
