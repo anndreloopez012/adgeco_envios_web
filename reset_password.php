@@ -47,7 +47,7 @@ $objController->process();
     <div class="content">
 <?php
 
-//$objTemplate->template_header($lang["core"]["title"].' - Restauracion de contraseña');
+//$objTemplate->template_header($lang["core"]["title"].' - Restauracion de password');
 
     //$objTemplate->template_content_open();
 
@@ -111,7 +111,7 @@ class reset_password_controller {
                 '</tr>'.
                 '<tr>'.
                     '<td>'.
-                        'Para poder restaurar tu contraseña debes de ingresar al siguiente enlace <a href="'.$_SERVER["SERVER_NAME"].'/reset_password.php?act=3&c='.$strCodigo.'&uwi='.$strUsuarioWebId.'" target="_blank">'.$_SERVER["SERVER_NAME"].'/reset_password.php?act=3&c='.$strCodigo.'&uwi='.$strUsuarioWebId.'</a> y digitar el codigo que se te proporciona a continuacion.'.
+                        'Para poder restaurar tu password debes de ingresar al siguiente enlace <a href="'.$_SERVER["SERVER_NAME"].'/reset_password.php?act=3&c='.$strCodigo.'&uwi='.$strUsuarioWebId.'" target="_blank">'.$_SERVER["SERVER_NAME"].'/reset_password.php?act=3&c='.$strCodigo.'&uwi='.$strUsuarioWebId.'</a> y digitar el codigo que se te proporciona a continuacion.'.
                     '</td>'.
                 '</tr>'.
                 '<tr>'.
@@ -141,14 +141,14 @@ class reset_password_controller {
                 '</tr>'.
                 '<tr>'.
                     '<td>'.
-                        'Administracion IDC'.
+                        'Administracion'.
                     '</td>'.
                 '</tr>'.
             '</table>';
 
             $arrMail = array();
             $arrMail["from"] = "administracion@{$_SERVER["SERVER_NAME"]}";
-            $arrMail["subject"] = "Restablecer contraseña IDC";
+            $arrMail["subject"] = "Restablecer password IDC";
             $arrMensaje = array();
             $arrMensaje["html"] = $strHtml;
 
@@ -260,9 +260,9 @@ class reset_password_view {
         <div class="row">
             <div class="col-lg-4 col-lg-offset-4">
                 <br>
-                <h3>RESTAURACIoN DE CONTRASEÑA</h3>
+                <h3>RESTAURACION DE PASSWORD</h3>
                 <br>
-                <p><?php print "¿Olvido su contraseña?<br><br>Por favor ingrese usuario y correo electronico registrado en el sitio.<br><br>Esto generara un link y un codigo que seran enviados a su correo electronico para poder realizar el cambio de contraseña.<br><br>Si no cuenta con un correo electronico por favor comunicarse con administracion."; ?></p>
+                <p><?php print "Olvido su password?<br><br>Por favor ingrese usuario y correo electronico registrado en el sitio.<br><br>Esto generara un link y un codigo que seran enviados a su correo electronico para poder realizar el cambio de password.<br><br>Si no cuenta con un correo electronico por favor comunicarse con administracion."; ?></p>
             </div>
         </div>
         <div class="row">
@@ -287,7 +287,7 @@ class reset_password_view {
         <div class="row">
             <div class="col-lg-2 col-lg-offset-5 text-center">
                 <?php
-                $objTemplate->draw_button('btnRestaurarContrasena', 'Restaurar contraseña', 'fntCheckForm()', '', 'sm', '');
+                $objTemplate->draw_button('btnRestaurarContrasena', 'Restaurar password', 'fntCheckForm()', '', 'sm', '');
                 ?>
             </div>
         </div>
@@ -310,8 +310,8 @@ class reset_password_view {
         </div>
         <div class="row">
             <div class="col-lg-6 col-lg-offset-3">
-                <h3>RESTAURACIoN DE CONTRASEÑA</h3>
-                <p><?php print "Se ha enviado un mensaje a su correo electronico para continuar con la restauracion de contraseña."; ?></p>
+                <h3>RESTAURACION DE PASSWORD</h3>
+                <p><?php print "Se ha enviado un mensaje a su correo electronico para continuar con la restauracion de password."; ?></p>
             </div>
         </div>
         <?php
@@ -374,7 +374,7 @@ class reset_password_view {
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4 text-center">
-                    <h3>RESTAURACIoN DE CONTRASEÑA</h3>
+                    <h3>RESTAURACIoN DE PASSWORD</h3>
                     <p><?php print "Ingresa el codigo que fue enviado a tu correo electronico."; ?></p>
                 </div>
             </div>
@@ -420,12 +420,12 @@ class reset_password_view {
                     boolValido = true;
                     if( $("input[name='txtNewPassword']").val().length < 8 ) {
                         boolValido = false;
-                        draw_Alert("danger", "Error: ", "La contraseña debe contener 8 caracteres como minimo.", true);
+                        draw_Alert("danger", "Error: ", "La password debe contener 8 caracteres como minimo.", true);
                     }
 
                     if( $("input[name='txtNewPassword']").val().length >= 8 && $("input[name='txtNewPassword']").val() != $("input[name='txtNewPasswordConfirmar']").val() ) {
                         boolValido = false;
-                        draw_Alert("danger", "Error: ", "Las contraseñas no coinciden.", true);
+                        draw_Alert("danger", "Error: ", "Las passwords no coinciden.", true);
                     }
 
                     if( boolValido ) {
@@ -445,12 +445,12 @@ class reset_password_view {
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4">
-                    <h3>RESTAURACIoN DE CONTRASEÑA</h3>
+                    <h3>RESTAURACIoN DE PASSWORD</h3>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4">
-                    <label>Nueva contraseña</label>
+                    <label>Nueva password</label>
                     <?php
                     $objForm->add_input_password('txtNewPassword', '', false);
                     $objForm->add_input_extraTag("txtNewPassword","maxlength","50");
@@ -460,7 +460,7 @@ class reset_password_view {
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-4">
-                    <label>Confirmar contraseña</label>
+                    <label>Confirmar password</label>
                     <?php
                     $objForm->add_input_password('txtNewPasswordConfirmar', '', false);
                     $objForm->add_input_extraTag("txtNewPasswordConfirmar","maxlength","50");
@@ -506,7 +506,7 @@ class reset_password_view {
         </div>
         <div class="row">
             <div class="col-lg-4 col-lg-offset-4">
-                <h3>Tu contraseña ha sido restablecida</h3>
+                <h3>Tu password ha sido restablecida</h3>
                 <p><?php print "Ahora puedes iniciar sesion con tu usuario."; ?></p>
             </div>
         </div>
