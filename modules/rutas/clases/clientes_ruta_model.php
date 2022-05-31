@@ -1,9 +1,7 @@
 <?php
-class clientes_cliente_model{
+class clientes_ruta_model{
 
     private $intCliente;
-    private $intClienteHistorico;
-
     public function __construct($intCliente){
         $this->intCliente = $intCliente;
     }
@@ -159,9 +157,9 @@ class clientes_cliente_model{
         return $arrData;
     }
 
-    public function getInfoEstadosExt(){
-        return getInfoEstados();
-    }
+   // public function getInfoEstadosExt(){
+   //     return getInfoEstados();
+   // }
 
     public function getInfoPiloto($intPiloto = 0){
         $arrData = array();
@@ -206,73 +204,17 @@ class clientes_cliente_model{
         return $arrData;
     }
 
-    
-    public function getInfoClienteConsultaDetalle($intCliente = 0){
+   
 
-        $arrData = array();
-        $strQuery ="SELECT  cliente,
-                            fecha_entrega_piloto,
-                            longitud,
-                            latitud,
-                            mapa_url,
-                            descrip_entrega
-                    FROM    cliente
-                    WHERE cliente = {$intCliente}";
-            $qTMP = db_query($strQuery);
-            //print($strQuery);
-            while( $rTMP = db_fetch_assoc($qTMP) ){
-                //$arrData[$rTMP["estado"]][$rTMP["cliente"]] = $rTMP;
-                $arrData[$rTMP["cliente"]] = $rTMP;
-            }
-            db_free_result($qTMP);
-            
-        return $arrData;
-    }
-
-    public function getInfoClienteConsultaAdjunto($intCarpeta = 0){
-        $intCliente = isset($_POST['cliente']) ? db_escape(user_input_delmagic($_POST['cliente'],true)) : 0;
-
-        $arrData = array();
-        $strQuery ="SELECT  cliente_adjunto,
-                            archivo,
-                            nombre
-                    FROM    cliente_adjunto
-                    WHERE cliente = {$intCliente}
-                    AND carpeta = {$intCarpeta}";
-            $qTMP = db_query($strQuery);
-            //print($strQuery);
-            while( $rTMP = db_fetch_assoc($qTMP) ){
-                //$arrData[$rTMP["estado"]][$rTMP["cliente"]] = $rTMP;
-                $arrData[$rTMP["cliente"]] = $rTMP;
-            }
-            db_free_result($qTMP);
-            
-        return $arrData;
-    }
-
-    public function getInfoClienteConsulta($strCodigo,$strMunicipio,$strDireccion,$strEstado,$strPiloto,$strDepartamento,$strZona,$strFilas,$strRuta){
+    public function getInfoClienteRuta($strCodigo,$strEstado,$strPiloto,$strFilas){
         $arrData = array();
         $strWhereFilter = "";
         if( !empty($strCodigo) ) {
             if( intval($strCodigo) > 0 ) {
-                $strWhereFilter .= getFilterQuery("c.cliente", intval($strCodigo), false);
-                $strWhereFilter .= " OR ";
-                $strWhereFilter .= getFilterQuery("c.cif", $strCodigo, false);
-                $strWhereFilter .= " OR ";
-                $strWhereFilter .= getFilterQuery("c.crm", $strCodigo, false);
+                $strWhereFilter .= getFilterQuery("c.ruta", intval($strCodigo), false);
                 $strWhereFilter .= " OR ";
             }
             $strWhereFilter .= getFilterQuery("c.nombre", $strCodigo, false);
-        }
-
-        if( !empty($strMunicipio) ) {
-            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
-            $strWhereFilter .= getFilterQuery("c.zona_municipio", $strMunicipio, false);
-        }
-
-        if( !empty($strDireccion) ) {
-            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
-            $strWhereFilter .= getFilterQuery("c.direccion", $strDireccion, false);
         }
 
         if( !empty($strEstado) ) {
@@ -287,22 +229,6 @@ class clientes_cliente_model{
             $strWhereFilter .= "p.persona IN({$strPiloto})";
         }
 
-        if( !empty($strDepartamento) ) {
-            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
-            $strWhereFilter .= getFilterQuery("c.departamento", $strDepartamento, false);
-        }
-
-        if( !empty($strRuta) ) {
-            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
-            $strWhereFilter .= getFilterQuery("a.ruta", $strRuta, false);
-        }
-
-        if( !empty($strZona) ) {
-            $strZona = trim($strZona);
-            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
-            $strWhereFilter .= "c.zona_municipio IN({$strZona})";
-        }
-
         if( !empty($strWhereFilter) ) {
             $strWhereFilter = "WHERE {$strWhereFilter}";
         }
@@ -314,39 +240,34 @@ class clientes_cliente_model{
             $strLimit = "";
         }
         
-        $strOrder = "ORDER BY fecha DESC,estado, nombre";
+        $strOrder = "ORDER BY c.ruta DESC,c.estado, c.nombre";
         
-        $strQuery ="SELECT  c.cliente,
-                            c.cif,
-                            c.crm,
+        $strQuery ="SELECT  c.ruta,
                             c.nombre,
-                            c.direccion,
-                            c.horario,
-                            c.tc,
-                            c.fecha_entrega_cliente,
+                            c.descrip,
+                            c.ruta_fecha,
+                            c.ruta_url,
                             CASE c.estado
                                 WHEN 'INGRESADO' THEN 1
                                 WHEN 'ASIGNADO' THEN 2
                                 WHEN 'ENTREGADO' THEN 3
                                 END AS estado,
                             c.estado AS estado_entrega,
-                            IF(c.mod_fecha IS NULL,c.add_fecha,c.mod_fecha) AS fecha,
-                            a.ruta,
                             p.nombre_usual AS piloto
-                    FROM    cliente AS c
+                    FROM    ruta AS c
                     LEFT JOIN cliente_asigna_piloto AS a
-                    on a.cliente = c.cliente
+                    on a.ruta = c.ruta
                     LEFT JOIN persona AS p
                     on p.persona = a.persona
                     {$strWhereFilter}
-                    GROUP BY c.cliente
+                    GROUP BY c.ruta
                     {$strOrder}
                     {$strLimit}";
             $qTMP = db_query($strQuery);
             //print($strQuery);
             while( $rTMP = db_fetch_assoc($qTMP) ){
                 //$arrData[$rTMP["estado"]][$rTMP["cliente"]] = $rTMP;
-                $arrData[$rTMP["cliente"]] = $rTMP;
+                $arrData[$rTMP["ruta"]] = $rTMP;
             }
             db_free_result($qTMP);
             

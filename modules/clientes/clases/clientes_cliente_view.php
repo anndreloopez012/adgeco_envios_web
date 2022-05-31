@@ -148,6 +148,32 @@ class clientes_cliente_view{
         $objTemplate->draw_modal_close_footer();
         $objTemplate->draw_modal_close();
 
+        $objTemplate->draw_modal_open("divModalDetalleCliente", "","lg");
+        $objTemplate->draw_modal_draw_header("Detalle", "", true,"");
+        $objTemplate->draw_modal_open_content("divModalDetalleClienteContent");
+            ?>
+                <div id="detalleCliente"> </div>
+            <?php 
+        $objTemplate->draw_modal_close_content();
+        $objTemplate->draw_modal_open_footer();
+            $objTemplate->draw_button("btnDetalle","Revisado","fntAutorizaRevision();","ok","sm");
+            $objTemplate->draw_button("btnDetalleCancelar","Cerrar","fntDetalleClienteCancelar();","remove","sm");
+        $objTemplate->draw_modal_close_footer();
+        $objTemplate->draw_modal_close();
+
+        $objTemplate->draw_modal_open("divModalGoogleMaps", "","lg");
+        $objTemplate->draw_modal_draw_header("Mapa", "", true,"");
+        $objTemplate->draw_modal_open_content("divModalGoogleMapsContent");
+            ?>
+                <div id="detalleMapaCliente"></div>
+            <?php 
+        $objTemplate->draw_modal_close_content();
+        $objTemplate->draw_modal_open_footer();
+        $objTemplate->draw_button("btnGoogleMapsAceptar","Aceptar","fntModMapa();","ok","sm");
+        $objTemplate->draw_button("btnGoogleMapsCancelar","Cerrar","fntGoogleMapsCancelar();","remove","sm");
+        $objTemplate->draw_modal_close_footer();
+        $objTemplate->draw_modal_close();
+
         ?>
         <div class="box box-solid">
             <div class="box-header">
@@ -189,6 +215,14 @@ class clientes_cliente_view{
                             ?>
                         </div>
                         <div class="col-lg-2 col-lg-offset-1">
+                            <label for="zona">
+                                <?php $objTemplate->drawTitleLeft("Numero Ruta"); ?>
+                            </label>
+                            <?php
+                            $objForm->add_input_text("ruta","","",true);
+                            ?>
+                        </div>
+                        <div class="col-lg-2 ">
                             <label for="estado">
                                 <?php $objTemplate->drawTitleLeft("Estado"); ?>
                             </label>
@@ -268,63 +302,80 @@ class clientes_cliente_view{
                      }
                 });
             }
-            
-            function fntCarga() {
 
-                var strCarga = new FormData($('#frmCargaCsv')[0]);
-
+            function fntClienteDetalleBusqueda(intCliente) {
                 $.ajax({
                      url: "<?php print $strAction; ?>",
                      async: true,
                      type: "post",
-                     data: "metodo=processCargaMasiva&" + strCarga,
-                     processData: false,
-                     contentType: false,
+                     dataType: "html",
+                     data: "metodo=drawContentClienteConsultaListadoDetalle&"+"&cliente="+intCliente,
                      beforeSend: function(){
                          showImgCoreLoading();
                      },
                      success: function( data ){
                          hideImgCoreLoading();
-                         $('#frmCargaCsv')[0].reset();
-                         $("#divModalCargaMasiva").modal("hide");
-                         fntClienteBusqueda()
-                         draw_Alert("succes","","Carga realizada exitosamente.",true);
-                         
+                         $("#detalleCliente").html("");
+                         $("#detalleCliente").html(data);
+                         $("#divModalDetalleCliente").modal("show");
                      },
                      error: function() {
                          hideImgCoreLoading();
-                         draw_Alert("danger","","Carga no pudo ser realizada.",true);
+                     }
+                });
+            }
+
+            function fntDrawMapa(intCliente) {
+                $.ajax({
+                     url: "<?php print $strAction; ?>",
+                     async: true,
+                     type: "post",
+                     dataType: "html",
+                     data: "metodo=drawContentClienteConsultaMapa&"+"&cliente="+intCliente,
+                     beforeSend: function(){
+                         showImgCoreLoading();
+                     },
+                     success: function( data ){
+                         hideImgCoreLoading();
+                         $("#detalleMapaCliente").html("");
+                         $("#detalleMapaCliente").html(data);
+                         $( "#cliente_mapa" ).val(intCliente);
+                         $("#divModalGoogleMaps").modal("show");
+                     },
+                     error: function() {
+                         hideImgCoreLoading();
                      }
                 });
             }
             
-           //function fntCarga() {
-           //    var strCarga = new FormData($('#frmCargaCsv')[0]);
+            
+           function fntCarga() {
+               var strCarga = new FormData($('#frmCargaCsv')[0]);
 
-           //    $.ajax({
+               $.ajax({
 
-           //        url: "<?php //print $strAction; ?>?validaciones=drawClienteCargaMasiva",
-           //        type: "post",
-           //        data: strCarga,
-           //        processData: false,
-           //        contentType: false,
-           //        beforeSend: function(){
-           //             showImgCoreLoading();
-           //         },
-           //         success: function( data ){
-           //             hideImgCoreLoading();
-           //             $('#frmCargaCsv')[0].reset();
-           //             draw_Alert("danger","","Carga realizada exitosamente.",true);
-           //             //fntClienteBusqueda()
-           //         },
-           //         error: function() {
-           //             hideImgCoreLoading();
-           //             draw_Alert("danger","","Carga no pudo ser realizada.",true);
-           //         }
-           //    });
+                   url: "<?php print $strAction; ?>?validaciones=drawClienteCargaMasiva",
+                   type: "post",
+                   data: strCarga,
+                   processData: false,
+                   contentType: false,
+                   beforeSend: function(){
+                        showImgCoreLoading();
+                    },
+                    success: function( data ){
+                        hideImgCoreLoading();
+                        $('#frmCargaCsv')[0].reset();
+                        draw_Alert("danger","","Carga realizada exitosamente.",true);
+                        fntClienteBusqueda()
+                    },
+                    error: function() {
+                        hideImgCoreLoading();
+                        draw_Alert("danger","","Carga no pudo ser realizada.",true);
+                    }
+               });
 
-           //    return false;
-           //}
+               return false;
+           }
             
             function fntModificarPiloto(){
                 var cliente = [];
@@ -340,6 +391,38 @@ class clientes_cliente_view{
                 }else{
                     draw_Alert("danger","","Por favor selecciona el (los) cliente(s) que desees modificar.",true);
                 }
+            }
+
+            function fntModMapa(){
+                var boolError = false;
+                var longitud_cliente = $( "#longitud_cliente" ).val();
+                var latitud_cliente = $( "#latitud_cliente" ).val();
+                var cliente_mapa = $( "#cliente_mapa" ).val();
+                var map_cliente = $( "#map_cliente" ).val();
+
+                if(!boolError){
+                    status = 1;
+                    $.ajax({
+                        url: "<?php print $strAction; ?>",
+                        async: false,
+                        type: "post",
+                        dataType: "html",
+                        data: "metodo=processModificarClienteMapa"+"&longitud_cliente="+longitud_cliente+"&latitud_cliente="+latitud_cliente+"&cliente_mapa="+cliente_mapa+"&map_cliente="+map_cliente,
+                        beforeSend: function(){
+                            showImgCoreLoading();
+                        },
+                        success: function( data ){
+                            hideImgCoreLoading();
+                            $( "#latitud_cliente" ).val("");
+                            $( "#longitud_cliente" ).val("");
+                            $( "#map_cliente" ).val("");
+                            $("#divModalGoogleMaps").modal("hide");
+                            fntClienteBusqueda();
+                            draw_Alert("succes","","Actualizacion de mapa Exitoso.",true);
+                        }
+                    });
+                }
+                    
             }
 
             function fntModificarPilotoAceptar(){
@@ -478,6 +561,14 @@ class clientes_cliente_view{
             function fntCargaMasivaCancelar(){
                 $("#divModalCargaMasiva").modal("hide");
             }
+
+            function fntDetalleClienteCancelar(){
+                $("#divModalDetalleCliente").modal("hide");
+            }
+
+            function fntGoogleMapsCancelar(){
+                $("#divModalGoogleMaps").modal("hide");
+            }
             
             $(function(){
                 $("#codigo").keyup(function(e){
@@ -526,6 +617,115 @@ class clientes_cliente_view{
         <?php
     }
 
+    public function drawContentClienteConsultaListadoDetalle() {
+        global $strAction,$objTemplate,$strAction,$objForm;
+        $intCliente = isset($_POST["cliente"]) ? db_escape(user_input_delmagic($_POST["cliente"],true)) : "";
+        $infoClienteDetalle = $this->objModel->getInfoClienteConsultaDetalle($intCliente);
+        $comentario = isset($infoClienteDetalle["descrip_entrega"]) ? ($infoClienteDetalle["descrip_entrega"]) : '';
+        $urlEntregaLat = isset($infoClienteDetalle["latitud"]) ? ($infoClienteDetalle["latitud"]) : '';
+        $urlEntregaLong = isset($infoClienteDetalle["longitud"]) ? ($infoClienteDetalle["longitud"]) : '';
+        ?>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <label for="codigo">
+                    <?php $objTemplate->drawTitleLeft("DESCRIPCION"); ?>
+                </label>
+                <b><?php $comentario; ?></b>
+            </div>
+            <div class="col-lg-10 col-lg-offset-1">
+                <label for="codigo">
+                    <?php $objTemplate->drawTitleLeft("UBICACION MENSAJERO ENTREGA - LATITUD/LONGITUD"); ?>
+                </label>
+                <b><?php $urlEntregaLat; ?> <?php $urlEntregaLong; ?></b>
+            </div>
+            <div class="col-lg-10 col-lg-offset-1">
+                <label for="DPI">
+                    <?php $objTemplate->drawTitleLeft("DPI"); ?>
+                </label>
+            </div>
+            <?php
+            $arrInfoClienteConsultaDpi = $this->objModel->getInfoClienteConsultaAdjunto(1);
+                if( !empty($arrInfoClienteConsultaDpi) ) {
+                    reset($arrInfoClienteConsultaDpi);
+                    while( $arrA = each($arrInfoClienteConsultaDpi) ) {
+                        ?>
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <img src="<?php print $arrA["value"]["archivo"]; ?>" class="img-fluid" alt="<?php print $arrA["value"]["nombre"]; ?>">
+                        </div>
+            <?php
+                    }
+                }
+            ?>
+            <div class="col-lg-10 col-lg-offset-1">
+                <label for="RECIBO">
+                    <?php $objTemplate->drawTitleLeft("RECIBO"); ?>
+                </label>
+            </div>
+            <?php
+            $arrInfoClienteConsultaRecibo = $this->objModel->getInfoClienteConsultaAdjunto(2);
+            if( !empty($arrInfoClienteConsultaRecibo) ) {
+                reset($arrInfoClienteConsultaRecibo);
+                while( $arrB = each($arrInfoClienteConsultaRecibo) ) {
+                    ?>
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <img src="<?php print $arrB["value"]["archivo"]; ?>" class="img-fluid" alt="<?php print $arrB["value"]["nombre"]; ?>">
+                        </div>
+                    </div>
+            <?php
+                    }
+                }
+            ?>
+        </div>
+        <?php
+    }
+
+    public function drawContentClienteConsultaMapa() {
+        global $objTemplate,$strAction,$objForm;
+        $intCliente = isset($_POST["cliente"]) ? db_escape(user_input_delmagic($_POST["cliente"],true)) : "";
+        $arrClienteDetalle = $this->objModel->getInfoClienteConsultaDetalle($intCliente);
+        
+        $urlEntregaLat = isset($arrClienteDetalle["latitud"]) ? $arrClienteDetalle["latitud"] : '';
+        $urlEntregaLong = isset($arrClienteDetalle["longitud"]) ? $arrClienteDetalle["longitud"] : '';
+        $intClienteCliente = isset($arrClienteDetalle["cliente"]) ? $arrClienteDetalle["cliente"] : '';
+        $mapa_url = isset($arrClienteDetalle["mapa_url"]) ? $arrClienteDetalle["mapa_url"] : '';
+
+        ?>
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1">
+                <?php
+                if($urlEntregaLat &&  $urlEntregaLong){
+                ?>
+                    <label for="mapa">
+                        <?php $objTemplate->drawTitleLeft("MAPA DE INGRESO CLIENTE"); ?>
+                    </label>
+                    <iframe src="https://embed.waze.com/es/iframe?
+                    zoom=6&lat=<?php print $urlEntregaLat; ?>&lon=<?php print $urlEntregaLong; ?>&pin=1"
+                    width="150%" height="700"></iframe>
+                    <br>
+                    <br>
+                <?php
+                }
+                ?>
+                <input type="hidden" id="cliente_mapa" value="<?php print $intClienteCliente; ?>">
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Latitud</span>
+                    <input type="text" id="latitud_cliente" class="form-control" aria-describedby="basic-addon1" value="<?php print $urlEntregaLat; ?>">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Longitud</span>
+                    <input type="text" id="longitud_cliente" class="form-control" aria-describedby="basic-addon1" value="<?php print $urlEntregaLong; ?>">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="basic-addon1">Google Maps</span>
+                    <input type="text" id="map_cliente" class="form-control" aria-describedby="basic-addon1" value="<?php print $mapa_url; ?>">
+                </div>
+            </div>
+            
+        </div>
+        <?php
+    }
+
     public function drawContentClienteConsultaListado() {
         global $strAction,$objTemplate,$objForm;
         
@@ -533,6 +733,7 @@ class clientes_cliente_view{
         $strMunicipio = isset($_POST["municipio"]) ? db_escape(user_input_delmagic($_POST["municipio"],true)) : "";
         $strDireccion = isset($_POST["direccion"]) ? db_escape(user_input_delmagic($_POST["direccion"],true)) : "";
         $strDepartamento = isset($_POST["departamento"]) ? db_escape(user_input_delmagic($_POST["departamento"],true)) : "";
+        $strRuta = isset($_POST["ruta"]) ? db_escape(user_input_delmagic($_POST["ruta"],true)) : "";
         $strEstado = "";
         if( !empty($_POST["estado"]) ) {
             $strEstado .= "'".implode("','",$_POST["estado"]);
@@ -559,6 +760,7 @@ class clientes_cliente_view{
                             <th>&nbsp;</th>
                             <th>Cliente</th>
                             <th>Nombre</th>
+                            <th class="text-center">Mapa</th>
                             <th class="text-center">Estado</th>
                             <th class="text-center">Cif</th>
                             <th class="text-center">Caso/Crm</th>
@@ -570,19 +772,19 @@ class clientes_cliente_view{
                     </thead>
                     <tbody>
                         <?php
-                        $arrInfoClienteConsulta = $this->objModel->getInfoClienteConsulta($strCodigo,$strMunicipio,$strDireccion,$strEstado,$strPiloto,$strDepartamento,$strZona,$strFilas);
+                        $arrInfoClienteConsulta = $this->objModel->getInfoClienteConsulta($strCodigo,$strMunicipio,$strDireccion,$strEstado,$strPiloto,$strDepartamento,$strZona,$strFilas,$strRuta);
                         if( !empty($arrInfoClienteConsulta) ) {
                             reset($arrInfoClienteConsulta);
                             while( $arrC = each($arrInfoClienteConsulta) ) {
-                                $strMd5 = md5($arrC["value"]["cliente"]);
                                 ?>
                                 <tr>
                                     <th>&nbsp;</th>
                                     <td style="text-align: center;">
                                         <input type="checkbox" name="check_modificar_cliente" id="check_modificar_cliente" data-content="" value="<?php print $arrC["value"]["cliente"] ?>">
                                     </td>
-                                    <td><a href="<?php print $strAction; ?>?cliente=<?php print $strMd5; ?>"><?php print str_pad($arrC["value"]["cliente"],10,"0",STR_PAD_LEFT); ?></a></td>
+                                    <td><a onclick="fntClienteDetalleBusqueda(<?php print $arrC["value"]["cliente"] ?>)"><?php print str_pad($arrC["value"]["cliente"],10,"0",STR_PAD_LEFT); ?></a></td>
                                     <td><?php print $arrC["value"]["nombre"]; ?></td>
+                                    <td><a onclick="fntDrawMapa(<?php print $arrC["value"]["cliente"] ?>)"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                                     <td><?php print $arrC["value"]["estado_entrega"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["cif"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["crm"]; ?></td>
@@ -644,6 +846,7 @@ class clientes_cliente_view{
                     ],
                     "aoColumns" : [
                         { "sWidth": "0%"},
+                        { "sWidth": "5%"},
                         { "sWidth": "5%"},
                         { "sWidth": "10%"},
                         { "sWidth": "10%"},

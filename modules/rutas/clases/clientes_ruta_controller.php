@@ -1,17 +1,17 @@
 <?php
-require_once("modules/clientes/clases/clientes_cliente_model.php");
-require_once("modules/clientes/clases/clientes_cliente_view.php");
+require_once("modules/rutas/clases/clientes_ruta_model.php");
+require_once("modules/rutas/clases/clientes_ruta_view.php");
 
-class clientes_cliente_controller{
+class clientes_ruta_controller{
 
     private $objModel;
     private $objView;
     private $intCliente;
     public function __construct($strCliente){
 
-        $this->intCliente = clientes_cliente_model::getClienteMD5($strCliente);
-        $this->objModel = new clientes_cliente_model($this->intCliente);
-        $this->objView = new clientes_cliente_view($this->intCliente);
+        $this->intCliente = clientes_ruta_model::getClienteMD5($strCliente);
+        $this->objModel = new clientes_ruta_model($this->intCliente);
+        $this->objView = new clientes_ruta_view($this->intCliente);
         $this->intUser = $_SESSION["hml"]["persona"];;
     }
 
@@ -141,58 +141,41 @@ class clientes_cliente_controller{
     }
 
     public function drawContent() {
-        $this->objView->drawContentClienteConsulta();
+        $this->objView->drawContentClienteRuta();
     }
 
-    public function processModificarPilotoCliente(){
-        $arrCliente = json_decode(stripslashes($_POST['cliente']));
+    public function processModificarRuta(){
+        $arrRuta = json_decode(stripslashes($_POST['cliente']));
         $intPiloto = isset($_POST['piloto']) ? db_escape(user_input_delmagic($_POST['piloto'],true)) : "";
-        $intRuta = isset($_POST['ruta']) ? db_escape(user_input_delmagic($_POST['ruta'],true)) : "";
+        $strRuta = isset($_POST['strRuta']) ? db_escape(user_input_delmagic($_POST['strRuta'],true)) : "";
+        $strDescrip = isset($_POST['descrip']) ? db_escape(user_input_delmagic($_POST['descrip'],true)) : "";
         $status = isset($_POST['status']) ? db_escape(user_input_delmagic($_POST['status'],true)) : "";
 
         if($status == 1){
-            foreach ($arrCliente as $cliente) {
-                $strQuery = "INSERT INTO cliente_asigna_piloto(cliente, persona, fecha_asignada, ruta, add_user, add_fecha)
-                VALUES ({$cliente}, {$intPiloto}, now(), $intRuta, $this->intUser, now());";
-                db_query($strQuery);
-            }
+            $strQuery = "INSERT INTO ruta(nombre, descrip, ruta_fecha, estado)
+            VALUES ( '$strRuta', '$strDescrip', now(), 'INGRESADO' );";
+            db_query($strQuery);
+            
         }
         else if($status == 2){
-            foreach ($arrCliente as $cliente) {
+            foreach ($arrRuta as $ruta) {
                 $strQuery = "UPDATE cliente_asigna_piloto 
                                 SET persona = {$intPiloto},
-                                    ruta = {$intRuta},
-                                    fecha_asignada = now(),
                                     mod_user = $this->intUser,
                                     mod_fecha = now()
-                                WHERE cliente = {$cliente}";
+                                WHERE ruta = {$ruta}";
                 db_query($strQuery); 
             }
         }
 
         else if($status == 3){
-            foreach ($arrCliente as $cliente) {
+            foreach ($arrRuta as $ruta) {
                 $strQuery = "DELETE FROM cliente_asigna_piloto
-                            WHERE cliente = {$cliente}";
+                            WHERE ruta = {$ruta}";
                 db_query($strQuery);
             }
         }
             
     }
 
-    public function processModificarClienteMapa(){
-        $longitud_cliente = isset($_POST['longitud_cliente']) ? db_escape(user_input_delmagic($_POST['longitud_cliente'],true)) : "";
-        $latitud_cliente = isset($_POST['latitud_cliente']) ? db_escape(user_input_delmagic($_POST['latitud_cliente'],true)) : "";
-        $cliente_mapa = isset($_POST['cliente_mapa']) ? db_escape(user_input_delmagic($_POST['cliente_mapa'],true)) : "";
-        $map_cliente = isset($_POST['map_cliente']) ? db_escape(user_input_delmagic($_POST['map_cliente'],true)) : "";
-        
-            $strQuery = "UPDATE cliente 
-                            SET latitud = '$latitud_cliente',
-                                longitud = '$longitud_cliente',
-                                mapa_url = '$map_cliente',
-                                mod_user = $this->intUser,
-                                mod_fecha = now()
-                            WHERE cliente = {$cliente_mapa}";
-            db_query($strQuery); 
-    }
 }
