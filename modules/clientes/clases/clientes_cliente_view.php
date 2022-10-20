@@ -17,14 +17,16 @@ class clientes_cliente_view{
     */
 
     public function drawButtonsClienteConsulta(){
-        global $lang,$strAction,$objTemplate;
+        global $lang,$strAction,$objTemplate,$arrAccesos;
+        $objTemplate->draw_button("btnPrintDocs","PDF DOCS","fntPrintDocsVal();","book","sm");
         $objTemplate->draw_button("btnModificarPiloto","Ruta y Piloto","fntModificarPiloto();","user","sm");
+        $objTemplate->draw_button("btnCargaUpdate","Carga CSV Recibo","fntCargaModalUpdate();","list","sm");
         $objTemplate->draw_button("btnCarga","Carga CSV","fntCargaModal();","list","sm");
         $objTemplate->draw_button("btnRefrescar","Refrescar","document.location.href='{$strAction}'","refresh","sm");
     }
 
     public function drawContentClienteConsulta() {
-        global $objTemplate,$strAction,$objForm;
+        global $objTemplate,$strAction,$objForm,$arrAccesos;
         $arrInfoEstados = $this->objModel->getInfoEstados();
         $boolEstado = !empty($_GET["estado"]);
         if( $boolEstado )
@@ -148,6 +150,29 @@ class clientes_cliente_view{
         $objTemplate->draw_modal_close_footer();
         $objTemplate->draw_modal_close();
 
+        $objTemplate->draw_modal_open("divModalCargaMasivaUpdate", "","lg");
+        $objTemplate->draw_modal_draw_header("Piloto", "", true,"");
+        $objTemplate->draw_modal_open_content("divModalModalCargaMasivaUpdateContent");
+            ?>
+                <form method="post" enctype="multipart/form-data" id="frmCargaCsvUpdate">
+                    <div class="row">
+                        <div class="col-10">
+                            <input class="form-control" type="file" name="fileContacts">
+                        </div>
+                        <div class="col-12">
+                            </br>
+                            <div class="col-md-12" style="text-align: center;"><b></br>CASO CRM</br>No.RECIBO</br>CODIGO CARGA</br></div>
+                        </div>
+                    </div>
+                </form>
+            <?php 
+        $objTemplate->draw_modal_close_content();
+        $objTemplate->draw_modal_open_footer();
+            $objTemplate->draw_button("btnModalCargaMasivaUpdate","Insertar Registros CSV","fntCargaUpdate();","ok","sm");
+            $objTemplate->draw_button("btnModalCargaMasivaUpdateCancelar","Cerrar","fntModalCargaMasivaUpdateCancelar();","remove","sm");
+        $objTemplate->draw_modal_close_footer();
+        $objTemplate->draw_modal_close();
+
         $objTemplate->draw_modal_open("divModalDetalleCliente", "","lg");
         $objTemplate->draw_modal_draw_header("Detalle", "", true,"");
         $objTemplate->draw_modal_open_content("divModalDetalleClienteContent");
@@ -247,12 +272,45 @@ class clientes_cliente_view{
                             $objForm->add_multi_select("zona",$arrInfoZona,"text-uppercase", true, "");
                             ?>
                         </div>
-                        <div class="col-lg-1">
+                        <div class="col-lg-2">
                             <label for="Filas">
                                 <?php $objTemplate->drawTitleLeft("No. Filas"); ?>
                             </label>
                             <?php
                             $objForm->add_select("filas",$arrInfoFilas,"text-uppercase", true, "");
+                            ?>
+                        </div>
+
+                        <div class="col-lg-offset-1 col-lg-2">
+                            <label for="fecha_de">
+                                <?php $objTemplate->drawTitleLeft("Fecha de"); ?>
+                            </label>
+                            <?php
+                            $objForm->add_input_text("fecha_de","","",true,"YYYY-MM-DD");
+                            ?>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="fecha_hasta">
+                                <?php $objTemplate->drawTitleLeft("fecha hasta"); ?>
+                            </label>
+                            <?php
+                            $objForm->add_input_text("fecha_hasta","","",true,"YYYY-MM-DD");
+                            ?>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="recibo">
+                                <?php $objTemplate->drawTitleLeft("No. Recibo"); ?>
+                            </label>
+                            <?php
+                            $objForm->add_input_text("recibo","","",true);
+                            ?>
+                        </div>
+                        <div class="col-lg-2">
+                            <label for="carga">
+                                <?php $objTemplate->drawTitleLeft("No.Carga"); ?>
+                            </label>
+                            <?php
+                            $objForm->add_input_text("carga","","",true);
                             ?>
                         </div>
                         
@@ -317,6 +375,7 @@ class clientes_cliente_view{
                          hideImgCoreLoading();
                          $("#detalleCliente").html("");
                          $("#detalleCliente").html(data);
+                         $("#cliente_detalle").val(intCliente);
                          $("#divModalDetalleCliente").modal("show");
                      },
                      error: function() {
@@ -349,6 +408,34 @@ class clientes_cliente_view{
             }
             
             
+           function fntCargaUpdate() {
+               var strCarga = new FormData($('#frmCargaCsvUpdate')[0]);
+
+               $.ajax({
+
+                   url: "<?php print $strAction; ?>?validaciones=drawClienteCargaMasivaUpdate",
+                   type: "post",
+                   data: strCarga,
+                   processData: false,
+                   contentType: false,
+                   beforeSend: function(){
+                        showImgCoreLoading();
+                    },
+                    success: function( data ){
+                        hideImgCoreLoading();
+                        $('#frmCargaCsvUpdate')[0].reset();
+                        draw_Alert("danger","","Carga realizada exitosamente.",true);
+                        fntClienteBusqueda()
+                    },
+                    error: function() {
+                        hideImgCoreLoading();
+                        draw_Alert("danger","","Carga no pudo ser realizada.",true);
+                    }
+               });
+
+               return false;
+           }
+
            function fntCarga() {
                var strCarga = new FormData($('#frmCargaCsv')[0]);
 
@@ -393,6 +480,41 @@ class clientes_cliente_view{
                 }
             }
 
+            function fntPrintDocsVal(){
+                document.frmClienteImprimir.submit();
+            }
+
+
+            function fntPrintPdfBanco() {
+                var cliente = [];
+                $.each($("input[name='check_modificar_cliente']:checked"), function(){
+                    cliente.push($(this).val());
+                });
+
+               $.ajax({
+
+                   url: "<?php print $strAction; ?>?validaciones=drawPdfBanco",
+                   type: "post",
+                   processData: false,
+                   data: cliente,
+                   contentType: false,
+                   beforeSend: function(){
+                        showImgCoreLoading();
+                    },
+                    success: function( data ){
+                        hideImgCoreLoading();
+                        draw_Alert("danger","","Carga realizada exitosamente.",true);
+                        fntClienteBusqueda()
+                    },
+                    error: function() {
+                        hideImgCoreLoading();
+                        draw_Alert("danger","","Carga no pudo ser realizada.",true);
+                    }
+               });
+
+               return false;
+           }
+
             function fntModMapa(){
                 var boolError = false;
                 var longitud_cliente = $( "#longitud_cliente" ).val();
@@ -419,6 +541,32 @@ class clientes_cliente_view{
                             $("#divModalGoogleMaps").modal("hide");
                             fntClienteBusqueda();
                             draw_Alert("succes","","Actualizacion de mapa Exitoso.",true);
+                        }
+                    });
+                }
+                    
+            }
+
+            function fntAutorizaRevision(){
+                var boolError = false;
+                var strEstado = 'FINALIZADO';
+                var cliente_detalle = $( "#cliente_detalle" ).val();
+                if(!boolError){
+                    status = 1;
+                    $.ajax({
+                        url: "<?php print $strAction; ?>",
+                        async: false,
+                        type: "post",
+                        dataType: "html",
+                        data: "metodo=processModificarClienteEstado"+"&estado="+strEstado+"&cliente_detalle="+cliente_detalle,
+                        beforeSend: function(){
+                            showImgCoreLoading();
+                        },
+                        success: function( data ){
+                            hideImgCoreLoading();
+                            $("#divModalDetalleCliente").modal("hide");
+                            fntClienteBusqueda();
+                            draw_Alert("primary","","Actualizacion de estado Exitoso.",true);
                         }
                     });
                 }
@@ -557,9 +705,15 @@ class clientes_cliente_view{
             function fntCargaModal(){
                 $("#divModalCargaMasiva").modal("show");
             }
+            function fntCargaModalUpdate(){
+                $("#divModalCargaMasivaUpdate").modal("show");
+            }
 
             function fntCargaMasivaCancelar(){
                 $("#divModalCargaMasiva").modal("hide");
+            }
+            function fntModalCargaMasivaUpdateCancelar(){
+                $("#divModalCargaMasivaUpdate").modal("hide");
             }
 
             function fntDetalleClienteCancelar(){
@@ -618,25 +772,39 @@ class clientes_cliente_view{
     }
 
     public function drawContentClienteConsultaListadoDetalle() {
-        global $strAction,$objTemplate,$strAction,$objForm;
+        global $objTemplate,$strAction,$objForm,$arrAccesos;
         $intCliente = isset($_POST["cliente"]) ? db_escape(user_input_delmagic($_POST["cliente"],true)) : "";
-        $infoClienteDetalle = $this->objModel->getInfoClienteConsultaDetalle($intCliente);
-        $comentario = isset($infoClienteDetalle["descrip_entrega"]) ? ($infoClienteDetalle["descrip_entrega"]) : '';
-        $urlEntregaLat = isset($infoClienteDetalle["latitud"]) ? ($infoClienteDetalle["latitud"]) : '';
-        $urlEntregaLong = isset($infoClienteDetalle["longitud"]) ? ($infoClienteDetalle["longitud"]) : '';
+        $arrClienteDetalle = $this->objModel->getInfoClienteConsultaDetalle($intCliente);
+        $strNombre = isset($arrClienteDetalle["nombre"]) ? $arrClienteDetalle["nombre"] : '';
+        $comentario = isset($arrClienteDetalle["descrip_entrega"]) ? ($arrClienteDetalle["descrip_entrega"]) : '';
+        $urlEntregaLat = isset($arrClienteDetalle["latitud_mensajero"]) ? ($arrClienteDetalle["latitud_mensajero"]) : '';
+        $urlEntregaLong = isset($arrClienteDetalle["longitud_mensajero"]) ? ($arrClienteDetalle["longitud_mensajero"]) : '';
+        
         ?>
+        <input type="hidden" id="cliente_detalle" value="<?php print $intCliente; ?>">
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
-                <label for="codigo">
-                    <?php $objTemplate->drawTitleLeft("DESCRIPCION"); ?>
+                <label for="nombre">
+                    <?php $objTemplate->drawTitleLeft("NOMBRE : "); ?>
                 </label>
-                <b><?php $comentario; ?></b>
+                <b><?php print $strNombre; ?></b>
+            </div>
+            <div class="col-lg-10 col-lg-offset-1">
+                <label for="descripcion">
+                    <?php $objTemplate->drawTitleLeft("DESCRIPCION : "); ?>
+                </label>
+                <b><?php print $comentario; ?></b>
             </div>
             <div class="col-lg-10 col-lg-offset-1">
                 <label for="codigo">
                     <?php $objTemplate->drawTitleLeft("UBICACION MENSAJERO ENTREGA - LATITUD/LONGITUD"); ?>
                 </label>
-                <b><?php $urlEntregaLat; ?> <?php $urlEntregaLong; ?></b>
+                <?php if($urlEntregaLat && $urlEntregaLong){ ?>
+                </br><b><?php print 'LATITUD-'.$urlEntregaLat; ?> <?php print 'LONGITUD-'.$urlEntregaLong; ?></b></br>
+                <iframe src="https://embed.waze.com/es/iframe?
+                zoom=6&lat=<?php print $urlEntregaLat; ?>&lon=<?php print $urlEntregaLong; ?>&pin=1"
+                width="100%" height="700"></iframe>
+                <?php }?>
             </div>
             <div class="col-lg-10 col-lg-offset-1">
                 <label for="DPI">
@@ -650,7 +818,9 @@ class clientes_cliente_view{
                     while( $arrA = each($arrInfoClienteConsultaDpi) ) {
                         ?>
                         <div class="col-lg-10 col-lg-offset-1">
-                            <img src="<?php print $arrA["value"]["archivo"]; ?>" class="img-fluid" alt="<?php print $arrA["value"]["nombre"]; ?>">
+                            <div class="col-lg-6 col-lg-offset-1">
+                                <img src="../<?php print $arrA["value"]["path_adjunto"]; ?>" width="400px" height="200px" class="img-fluid" alt="<?php print $arrA["value"]["nombre_adjunto"]; ?>"></br>
+                            </div>
                         </div>
             <?php
                     }
@@ -668,8 +838,8 @@ class clientes_cliente_view{
                 while( $arrB = each($arrInfoClienteConsultaRecibo) ) {
                     ?>
                     <div class="col-lg-10 col-lg-offset-1">
-                        <div class="col-lg-10 col-lg-offset-1">
-                            <img src="<?php print $arrB["value"]["archivo"]; ?>" class="img-fluid" alt="<?php print $arrB["value"]["nombre"]; ?>">
+                        <div class="col-lg-6 col-lg-offset-1">
+                            <img src="../<?php print $arrB["value"]["path_adjunto"]; ?>" width="300px" height="400px" class="img-fluid" alt="<?php print $arrB["value"]["nombre_adjunto"]; ?>"></br>
                         </div>
                     </div>
             <?php
@@ -684,7 +854,8 @@ class clientes_cliente_view{
         global $objTemplate,$strAction,$objForm;
         $intCliente = isset($_POST["cliente"]) ? db_escape(user_input_delmagic($_POST["cliente"],true)) : "";
         $arrClienteDetalle = $this->objModel->getInfoClienteConsultaDetalle($intCliente);
-        
+        $urlEntregaLat = isset($arrClienteDetalle["latitud"]) ? $arrClienteDetalle["latitud"] : '';
+
         $urlEntregaLat = isset($arrClienteDetalle["latitud"]) ? $arrClienteDetalle["latitud"] : '';
         $urlEntregaLong = isset($arrClienteDetalle["longitud"]) ? $arrClienteDetalle["longitud"] : '';
         $intClienteCliente = isset($arrClienteDetalle["cliente"]) ? $arrClienteDetalle["cliente"] : '';
@@ -701,7 +872,7 @@ class clientes_cliente_view{
                     </label>
                     <iframe src="https://embed.waze.com/es/iframe?
                     zoom=6&lat=<?php print $urlEntregaLat; ?>&lon=<?php print $urlEntregaLong; ?>&pin=1"
-                    width="150%" height="700"></iframe>
+                    width="100%" height="700"></iframe>
                     <br>
                     <br>
                 <?php
@@ -728,12 +899,23 @@ class clientes_cliente_view{
 
     public function drawContentClienteConsultaListado() {
         global $strAction,$objTemplate,$objForm;
+
+        $objForm = new form("frmClienteImprimir","frmClienteImprimir","post","{$strAction}");
+        $objForm->form_setExtraTag("target","_blank");
+        $objForm->form_openForm();
         
+        $objForm->add_input_hidden("metodo","drawContentDetalleClienteListado",true);
         $strCodigo = isset($_POST["codigo"]) ? db_escape(user_input_delmagic($_POST["codigo"],true)) : "";
         $strMunicipio = isset($_POST["municipio"]) ? db_escape(user_input_delmagic($_POST["municipio"],true)) : "";
         $strDireccion = isset($_POST["direccion"]) ? db_escape(user_input_delmagic($_POST["direccion"],true)) : "";
         $strDepartamento = isset($_POST["departamento"]) ? db_escape(user_input_delmagic($_POST["departamento"],true)) : "";
         $strRuta = isset($_POST["ruta"]) ? db_escape(user_input_delmagic($_POST["ruta"],true)) : "";
+
+        $strFechaDe = isset($_POST["fecha_de"]) ? db_escape(user_input_delmagic($_POST["fecha_de"],true)) : "";
+        $strFechaHasta = isset($_POST["fecha_hasta"]) ? db_escape(user_input_delmagic($_POST["fecha_hasta"],true)) : "";
+        $strRecibo = isset($_POST["recibo"]) ? db_escape(user_input_delmagic($_POST["recibo"],true)) : "";
+        $strCarga = isset($_POST["carga"]) ? db_escape(user_input_delmagic($_POST["carga"],true)) : "";
+
         $strEstado = "";
         if( !empty($_POST["estado"]) ) {
             $strEstado .= "'".implode("','",$_POST["estado"]);
@@ -757,7 +939,7 @@ class clientes_cliente_view{
                     <thead>
                         <tr>
                             <th>&nbsp;</th>
-                            <th>&nbsp;</th>
+                            <th><input type="checkbox" id="MarcarTodos"></th>
                             <th>Cliente</th>
                             <th>Nombre</th>
                             <th class="text-center">Mapa</th>
@@ -765,21 +947,27 @@ class clientes_cliente_view{
                             <th class="text-center">Cif</th>
                             <th class="text-center">Caso/Crm</th>
                             <th class="text-center">Direccion</th>
-                            <th class="text-center">Horario</th>
+                            <th class="text-center">Comentario</th>
+                            <th class="text-center">Ejecutivo en Ventas</th>
                             <th class="text-center">Piloto</th>
                             <th class="text-center">Fecha/Entrega</th>
+                            <th class="text-center">Telefono</th>
+                            <th class="text-center">Zona/Municipio</th>
+                            <th class="text-center">Departamento</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $arrInfoClienteConsulta = $this->objModel->getInfoClienteConsulta($strCodigo,$strMunicipio,$strDireccion,$strEstado,$strPiloto,$strDepartamento,$strZona,$strFilas,$strRuta);
+                        $arrInfoClienteConsulta = $this->objModel->getInfoClienteConsulta($strCodigo,$strMunicipio,$strDireccion,$strEstado,$strPiloto,$strDepartamento,$strZona,$strFilas,$strRuta,$strFechaDe,$strFechaHasta,$strRecibo,$strCarga);
                         if( !empty($arrInfoClienteConsulta) ) {
+                            $intContadorCliente = 1;
                             reset($arrInfoClienteConsulta);
                             while( $arrC = each($arrInfoClienteConsulta) ) {
                                 ?>
                                 <tr>
                                     <th>&nbsp;</th>
                                     <td style="text-align: center;">
+                                        <input type="hidden" name="cliente_<?php print $intContadorCliente ?>" id="cliente_<?php print $intContadorCliente ?>" value="<?php print $arrC["value"]["cliente"] ?>">
                                         <input type="checkbox" name="check_modificar_cliente" id="check_modificar_cliente" data-content="" value="<?php print $arrC["value"]["cliente"] ?>">
                                     </td>
                                     <td><a onclick="fntClienteDetalleBusqueda(<?php print $arrC["value"]["cliente"] ?>)"><?php print str_pad($arrC["value"]["cliente"],10,"0",STR_PAD_LEFT); ?></a></td>
@@ -790,10 +978,15 @@ class clientes_cliente_view{
                                     <td style="text-align: center;"><?php print $arrC["value"]["crm"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["direccion"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["horario"]; ?></td>
+                                    <td style="text-align: center;"><?php print $arrC["value"]["ejecutivo_ventas"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["piloto"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["fecha_entrega_cliente"]; ?></td>
+                                    <td style="text-align: center;"><?php print $arrC["value"]["telefono"]; ?></td>
+                                    <td style="text-align: center;"><?php print $arrC["value"]["zona_municipio"]; ?></td>
+                                    <td style="text-align: center;"><?php print $arrC["value"]["departamento"]; ?></td>
                                 </tr>
                                 <?php
+                                $intContadorCliente ++;
                             }
                         }
                         ?>
@@ -801,21 +994,46 @@ class clientes_cliente_view{
                 </table>
             </div>
         </div>
+        <?php
+        $objForm->form_closeForm();
+        ?>
+
         <script>
             $(function() {
+
                 $("#tblClienteConsultaListado").DataTable({
-                    "dom": 'Bfrtip',
-                    "buttons": [
-                        {
-                            extend: 'excelHtml5',
-                            exportOptions: {
-                                columns: [ 2, 3, 4, 5, 6, 7, 8, 9 ]
+                    "dom": 'B<"clear">lfrtip',
+                    //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                    buttons: {
+                        buttons: [
+                            'copy',
+                            { extend: 'excelHtml5',
+                                text: 'Excel',
+                                exportOptions: {
+                                                columns: [ 2, 12, 6, 7, 10, 3, 13, 8, 14, 15, 9, 11, 5]
+                                                            }, 
+                            },
+                            { extend: 'pdfHtml5', 
+                                text: 'PDF',
+                                exportOptions: {
+                                                columns: [ 2, 12, 6, 7, 10, 3, 13, 8 ]
+                                                            }, 
+                            },
+                            { extend: 'print', 
+                                text: 'Imprimir',
+                                exportOptions: {
+                                                columns: [ 2, 12, 6, 7, 10, 3, 13, 8, 14, 15, 9, 11, 5 ]
+                                                            }, 
+                            },
+                            { extend: 'colvis', 
+                                text: 'Ocultar',
+                                columns: [ 2, 3, 5, 6, 7, 8, 9, 10, 11, 12 ],
                             }
-                        },
-                    ],
-                    "order": [[ 1, "asc" ]],
-                    "bPaginate": true,
-                    "sLengthMenu": "Mostrar MENU registros",
+                        ]
+                    },
+                    
+                    "oPaginate": true,
+                    "aLengthMenu": [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, "All"]],
                     "oLanguage": {
                         "oPaginate": {
                             "sNext": "Siguiente",
@@ -831,39 +1049,91 @@ class clientes_cliente_view{
                         "sInfoFiltered": " - filtrado de  _MAX_ registros"
                         
                     },
-                    "drawCallback": function ( settings ) {
-                        $(".dataTables_scrollBody").scrollTop(0);
-
-                        var api = this.api();
-                        var rows = api.rows( {page:'current'} ).nodes();
-                        var last=null;
-
-                    },
+                    //guarda configuracion de tabla
+                    "stateSave": true,
                     "aoColumnDefs": [
-                        { "visible": false, "targets": [ 0 ] },
-                        { "bSearchable": false, "aTargets": [ 2,3,4,5,6,7,8,9 ] },
+                        //ocultar columna columna tabla
+                        { "visible": false, "targets": [ 0,13,14,15 ] },
+                        //filtro no busqueda columna tabla
+                        { "bSearchable": false, "aTargets": [ 0,1 ] },
+                        //filtro no columna tabla
                         { "bSortable": false, "aTargets": [ 0,1 ] }
-                    ],
-                    "aoColumns" : [
-                        { "sWidth": "0%"},
-                        { "sWidth": "5%"},
-                        { "sWidth": "5%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "10%"},
-                        { "sWidth": "5%"},
-                        //{ "sWidth": "5%"}
                     ]
-                    
+                });
+
+            });
+
+            $('document').ready(function () {
+                $("#MarcarTodos").change(function () {
+                    $("input:checkbox").prop('checked', $(this).prop("checked"));
                 });
             });
         </script>
         <?php
     }
-    
+
+    public function drawContentDetalleClienteListado(){
+        require_once("libraries/tcpdf/tcpdf.php");
+
+        $pdf = new TCPDF("P", "mm", array(216,279), false, 'ISO-8859-1', false);
+        $pdf->SetTitle('Impresion');
+        // Quitando encabezado y pie de página
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        // set default monospaced font
+        $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+        // set margins
+        $pdf->SetMargins(10, 10, 10);
+        // set auto page breaks
+        $pdf->SetAutoPageBreak(false, 10);
+        $pdf->SetDisplayMode('fullpage', 'SinglePage', 'UseNone');
+        $font = $pdf->addTTFfont('libraries/tcpdf/fonts/arialbd.ttf', 'TrueType', '', 32);
+
+        reset($_POST);
+        while( $rTMP = each($_POST) ){
+            $arrExplode = explode("_",$rTMP["key"]);
+            if( isset($arrExplode[1]) ) {
+                if ($arrExplode[0] == "cliente") {
+            $intCliente = isset($_POST["cliente_{$arrExplode[1]}"]) ? intval($_POST["cliente_{$arrExplode[1]}"]) : 0;
+            $arrClienteDetalle = $this->objModel->getInfoClienteConsultaDetalle($intCliente);
+            $strNombre = isset($arrClienteDetalle["nombre"]) ? $arrClienteDetalle["nombre"] : '';
+            $pdf->AddPage();
+$html = <<<EOF
+<br /><span>NOMBRE: {$strNombre}</span>
+<br /><br /><span>DPI</span><br />
+EOF;
+
+        $left = 10;
+        $arrInfoClienteConsultaDpi = $this->objModel->getInfoClienteConsultaAdjuntoPdf(1,$intCliente);
+        if( !empty($arrInfoClienteConsultaDpi) ) {
+            reset($arrInfoClienteConsultaDpi);
+            while( $arrA = each($arrInfoClienteConsultaDpi) ) {
+                $ruta = "../". $arrA["value"]["path_adjunto"]; 
+                $pdf->Image($ruta, $left, 27, 90, 50, 'JPG', '', 'left', true, 500, '', false, false, 1, false, false, false);
+                $left = 110;
+            }
+        }
+        
+        $pdf->writeHTML($html, true, false, true, false, '');
+$html = <<<EOF
+<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><span>RECIBO</span><br />
+EOF;
+        $left = 10;
+        $arrInfoClienteConsultaDpi = $this->objModel->getInfoClienteConsultaAdjuntoPdf(2,$intCliente);
+        if( !empty($arrInfoClienteConsultaDpi) ) {
+            reset($arrInfoClienteConsultaDpi);
+            while( $arrA = each($arrInfoClienteConsultaDpi) ) {
+                $ruta = "../". $arrA["value"]["path_adjunto"]; 
+                $pdf->Image($ruta, $left, 86, 60, 90, 'JPG', '', 'left', true, 500, '', false, false, 1, false, false, false);
+                $left = 110;
+            }
+        }
+        
+        $pdf->writeHTML($html, true, false, true, false, '');
+                }
+            }
+        }
+
+        $pdf->Output('DetalleCliente.pdf', 'I');
+    }
 }

@@ -119,6 +119,8 @@ class clientes_cliente_model{
         $arrData["INGRESADO"]["texto"] = "INGRESADO";
         $arrData["ASIGNADO"]["texto"] = "ASIGNADO";
         $arrData["ENTREGADO"]["texto"] = "ENTREGADO";
+        $arrData["PENDIENTE"]["texto"] = "PENDIENTE";
+        $arrData["FINALIZADO"]["texto"] = "FINALIZADO";
         return $arrData;
     }
 
@@ -191,7 +193,7 @@ class clientes_cliente_model{
         $strQuery ="SELECT ruta,
                     UPPER(nombre) AS nombre
                     FROM ruta 
-                    ORDER BY nombre";
+                    ORDER BY ruta DESC LIMIT 20";
         $qTMP = db_query($strQuery);
         while( $rTMP = db_fetch_assoc($qTMP) ){
             $arrData[$rTMP["ruta"]]["texto"] = $rTMP["nombre"];
@@ -210,22 +212,25 @@ class clientes_cliente_model{
     public function getInfoClienteConsultaDetalle($intCliente = 0){
 
         $arrData = array();
-        $strQuery ="SELECT  cliente,
-                            fecha_entrega_piloto,
-                            longitud,
-                            latitud,
-                            mapa_url,
-                            descrip_entrega
-                    FROM    cliente
-                    WHERE cliente = {$intCliente}";
+        $strQuery ="SELECT  c.cliente,
+                            c.longitud,
+                            c.nombre,
+                            c.latitud,
+                            c.mapa_url,
+                            a.latitud_mensajero,
+                            a.longitud_mensajero,
+                            a.comentario_mensajero,
+                            a.fecha_entrega_mensajero
+                    FROM    cliente AS c
+                    LEFT JOIN cliente_asigna_piloto AS a
+                    ON c.cliente = a.cliente
+                    WHERE c.cliente = {$intCliente}";
             $qTMP = db_query($strQuery);
-            //print($strQuery);
+            
             while( $rTMP = db_fetch_assoc($qTMP) ){
-                //$arrData[$rTMP["estado"]][$rTMP["cliente"]] = $rTMP;
-                $arrData[$rTMP["cliente"]] = $rTMP;
+                    $arrData = $rTMP;
             }
             db_free_result($qTMP);
-            
         return $arrData;
     }
 
@@ -233,24 +238,49 @@ class clientes_cliente_model{
         $intCliente = isset($_POST['cliente']) ? db_escape(user_input_delmagic($_POST['cliente'],true)) : 0;
 
         $arrData = array();
-        $strQuery ="SELECT  cliente_adjunto,
-                            archivo,
-                            nombre
-                    FROM    cliente_adjunto
-                    WHERE cliente = {$intCliente}
-                    AND carpeta = {$intCarpeta}";
+        $strQuery ="SELECT  adjuntos_clientes,
+                            nombre_adjunto,
+                            documento_identificacion,
+                            path_adjunto
+                    FROM    adjuntos_clientes
+                    WHERE persona = {$intCliente}
+                    AND documento_identificacion = {$intCarpeta}
+                    ORDER BY adjuntos_clientes DESC";
+                                //print($strQuery);
+
             $qTMP = db_query($strQuery);
-            //print($strQuery);
             while( $rTMP = db_fetch_assoc($qTMP) ){
                 //$arrData[$rTMP["estado"]][$rTMP["cliente"]] = $rTMP;
-                $arrData[$rTMP["cliente"]] = $rTMP;
+                $arrData[$rTMP["adjuntos_clientes"]] = $rTMP;
             }
             db_free_result($qTMP);
             
         return $arrData;
     }
 
-    public function getInfoClienteConsulta($strCodigo,$strMunicipio,$strDireccion,$strEstado,$strPiloto,$strDepartamento,$strZona,$strFilas,$strRuta){
+    public function getInfoClienteConsultaAdjuntoPdf($intCarpeta = 0, $intCliente = 0){
+        $arrData = array();
+        $strQuery ="SELECT  adjuntos_clientes,
+                            nombre_adjunto,
+                            documento_identificacion,
+                            path_adjunto
+                    FROM    adjuntos_clientes
+                    WHERE persona = {$intCliente}
+                    AND documento_identificacion = {$intCarpeta}
+                    ORDER BY adjuntos_clientes DESC
+                    LIMIT 2";
+            $qTMP = db_query($strQuery);
+            //print($strQuery);
+            while( $rTMP = db_fetch_assoc($qTMP) ){
+                //$arrData[$rTMP["estado"]][$rTMP["cliente"]] = $rTMP;
+                $arrData[$rTMP["adjuntos_clientes"]] = $rTMP;
+            }
+            db_free_result($qTMP);
+            
+        return $arrData;
+    }
+
+    public function getInfoClienteConsulta($strCodigo,$strMunicipio,$strDireccion,$strEstado,$strPiloto,$strDepartamento,$strZona,$strFilas,$strRuta,$strFechaDe,$strFechaHasta,$strRecibo,$strCarga){
         $arrData = array();
         $strWhereFilter = "";
         if( !empty($strCodigo) ) {
@@ -303,6 +333,25 @@ class clientes_cliente_model{
             $strWhereFilter .= "c.zona_municipio IN({$strZona})";
         }
 
+        if( !empty($strFechaDe) && !empty($strFechaHasta) ) {
+            $strFechaDe = trim($strFechaDe);
+            $strFechaHasta = trim($strFechaHasta);
+            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
+            $strWhereFilter .= "c.fecha_entrega_cliente BETWEEN'$strFechaDe' AND '$strFechaHasta'";
+        }
+
+        if( !empty($strCarga) ) {
+            $strZona = trim($strCarga);
+            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
+            $strWhereFilter .= "c.codigo_carga_update IN({$strCarga})";
+        }
+
+        if( !empty($strRecibo) ) {
+            $strZona = trim($strRecibo);
+            $strWhereFilter .= empty($strWhereFilter) ? "" : " AND ";
+            $strWhereFilter .= "c.recibo IN({$strRecibo})";
+        }
+
         if( !empty($strWhereFilter) ) {
             $strWhereFilter = "WHERE {$strWhereFilter}";
         }
@@ -314,7 +363,7 @@ class clientes_cliente_model{
             $strLimit = "";
         }
         
-        $strOrder = "ORDER BY fecha DESC,estado, nombre";
+        $strOrder = "ORDER BY c.nombre, c.direccion DESC";
         
         $strQuery ="SELECT  c.cliente,
                             c.cif,
@@ -322,8 +371,12 @@ class clientes_cliente_model{
                             c.nombre,
                             c.direccion,
                             c.horario,
+                            c.telefono,
+                            c.zona_municipio,
+                            c.departamento,
                             c.tc,
                             c.fecha_entrega_cliente,
+                            c.ejecutivo_ventas,
                             CASE c.estado
                                 WHEN 'INGRESADO' THEN 1
                                 WHEN 'ASIGNADO' THEN 2
@@ -339,7 +392,6 @@ class clientes_cliente_model{
                     LEFT JOIN persona AS p
                     on p.persona = a.persona
                     {$strWhereFilter}
-                    GROUP BY c.cliente
                     {$strOrder}
                     {$strLimit}";
             $qTMP = db_query($strQuery);

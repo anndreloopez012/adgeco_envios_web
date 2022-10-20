@@ -34,6 +34,20 @@ class clientes_ruta_view{
         $arrInfoRuta = $this->objModel->getInfoRuta();
         $arrInfoZona = $this->objModel->getInfoZona();
         $arrInfoFilas = $this->objModel->getInfoFilas();
+
+        $objTemplate->draw_modal_open("divModalRuta", "","lg");
+        $objTemplate->draw_modal_draw_header("Mapa", "", true,"");
+        $objTemplate->draw_modal_open_content("divModalRutaContent");
+
+        $objForm->add_input_hidden("ruta","",true);
+        $objForm->add_input_text("urlRuta","","text-uppercase",true,""); 
+
+        $objTemplate->draw_modal_close_content();
+        $objTemplate->draw_modal_open_footer();
+        $objTemplate->draw_button("btnRutaAceptar","Aceptar","fntUrlRutaAsigna();","ok","sm");
+        $objTemplate->draw_button("btnRutaCancelar","Cerrar","fntRutaCancelar();","remove","sm");
+        $objTemplate->draw_modal_close_footer();
+        $objTemplate->draw_modal_close();
         
         $objTemplate->draw_modal_open("divModalModificarPiloto", "","lg");
         $objTemplate->draw_modal_draw_header("Ruta y Piloto", "", true,"");
@@ -376,6 +390,47 @@ class clientes_ruta_view{
             function fntGoogleMapsCancelar(){
                 $("#divModalGoogleMaps").modal("hide");
             }
+
+            function fntRutaCancelar(){
+                $("#divModalRuta").modal("hide");
+            }
+            function fntRutaVer(){
+                $("#divModalRuta").modal("show");
+            }
+
+            function fntDrawRuta(intValor){
+                $("#ruta").val(intValor);
+                fntRutaVer();
+            }
+
+            function fntUrlRutaAsigna(){
+                var boolError = false;
+                var urlRuta = $( "#urlRuta" ).val();
+                var ruta = $( "#ruta" ).val();
+
+                if(!boolError){
+                    status = 1;
+                    $.ajax({
+                        url: "<?php print $strAction; ?>",
+                        async: false,
+                        type: "post",
+                        dataType: "html",
+                        data: "metodo=processUrlRuta"+"&urlRuta="+urlRuta+"&ruta="+ruta,
+                        beforeSend: function(){
+                            showImgCoreLoading();
+                        },
+                        success: function( data ){
+                            hideImgCoreLoading();
+                            $( "#urlRuta" ).val("");
+                            $( "#ruta" ).val("");
+                            $("#divModalRuta").modal("hide");
+                            fntClienteBusqueda();
+                            draw_Alert("succes","","Actualizacion de mapa Exitoso.",true);
+                        }
+                    });
+                }
+                    
+            }
             
             function fntMostrarModificarPiloto(){
                 if ($("input[name='modificar_piloto_check']:checked").val() == "modificar_piloto") {
@@ -460,6 +515,7 @@ class clientes_ruta_view{
             $strZona .= "'";
         }
         $strFilas = isset($_POST["filas"]) ? db_escape(user_input_delmagic($_POST["filas"],true)) : "";
+        
         ?>
         <div class="box box-solid">
             <div class="box-body">
@@ -471,6 +527,7 @@ class clientes_ruta_view{
                             <th>Ruta</th>
                             <th>Nombre</th>
                             <th class="text-center">Descripcion</th>
+                            <th class="text-center">Asigna Url</th>
                             <th class="text-center">Url</th>
                             <th class="text-center">Piloto</th>
                             <th class="text-center">Fecha Ruta</th>
@@ -481,6 +538,7 @@ class clientes_ruta_view{
                         <?php
                         $arrInfoClienteConsulta = $this->objModel->getInfoClienteRuta($strCodigo,$strEstado,$strPiloto,$strFilas);
                         if( !empty($arrInfoClienteConsulta) ) {
+                            $intContador = 1;
                             reset($arrInfoClienteConsulta);
                             while( $arrC = each($arrInfoClienteConsulta) ) {
                                 $strMd5 = md5($arrC["value"]["ruta"]);
@@ -493,12 +551,14 @@ class clientes_ruta_view{
                                     <td><b><?php print ($arrC["value"]["ruta"]); ?></b></td>
                                     <td><?php print $arrC["value"]["nombre"]; ?></td>
                                     <td><?php print $arrC["value"]["descrip"]; ?></td>
+                                    <td><a onclick="fntDrawRuta(<?php print $arrC["value"]["ruta"] ?>)"><span class="glyphicon glyphicon-eye-open"></span></a></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["ruta_url"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["piloto"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["ruta_fecha"]; ?></td>
                                     <td style="text-align: center;"><?php print $arrC["value"]["estado_entrega"]; ?></td>
                                 </tr>
                                 <?php
+                                $intContador ++;
                             }
                         }
                         ?>

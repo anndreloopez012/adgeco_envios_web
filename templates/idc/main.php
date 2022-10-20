@@ -67,8 +67,9 @@ class template extends main{
                 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
                 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
                 <![endif]-->
-
-                <!-- jQuery 2.1.4 -->
+                <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.css"/>
+ 
+               <!-- jQuery 2.1.4 -->
                 <script src="templates/idc/libraries/jQuery-2.1.4.min.js" type="text/javascript"></script>
                 <!-- Bootstrap 3.3.2 JS -->
                 <script src="templates/idc/libraries/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -99,6 +100,11 @@ class template extends main{
                 <script src="libraries/jquery/ui/jquery.ui.min.js" type="text/javascript"></script>
                 <script src="libraries/jquery/ui/jquery.ui.multiselect.min.js" type="text/javascript"></script>
                 <script src="libraries/jquery/ui/jquery.ui.combobox.min.js" type="text/javascript"></script>
+
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+                <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+                <script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.12.1/af-2.4.0/b-2.2.3/b-colvis-2.2.3/b-html5-2.2.3/b-print-2.2.3/datatables.min.js"></script>
+                
 
                 <!-- AdminLTE for demo purposes -->
                 <script src="templates/idc/libraries/demo.js" type="text/javascript"></script>

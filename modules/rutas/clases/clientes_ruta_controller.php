@@ -178,4 +178,14 @@ class clientes_ruta_controller{
             
     }
 
+    public function processUrlRuta(){
+        $urlRuta = isset($_POST['urlRuta']) ? db_escape(user_input_delmagic($_POST['urlRuta'],true)) : "";
+        $ruta = isset($_POST['ruta']) ? db_escape(user_input_delmagic($_POST['ruta'],true)) : "";
+        
+            $strQuery = "UPDATE ruta 
+                            SET ruta_url = '$urlRuta'
+                            WHERE ruta = {$ruta}";
+            db_query($strQuery); 
+    }
+
 }

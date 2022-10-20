@@ -1,9 +1,9 @@
 <?php
 define("MODULO","clientes");
-define("ACCESO","clientes_consulta_cliente");
+define("ACCESO","clientes_cliente");
 require_once("core/main.php");
 require_once("core/forms.php");
-require_once("modules/clientes/clases/clientes_cliente_controller.php");
+require_once("modules/".MODULO."/clases/".ACCESO."_controller.php");
 
 $objTemplate = new template();
 if( !$objTemplate->check_module(MODULO) ) core_sesion_expirada();

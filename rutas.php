@@ -1,9 +1,9 @@
 <?php
 define("MODULO","rutas");
-define("ACCESO","clientes_ruta_cliente");
+define("ACCESO","clientes_ruta");
 require_once("core/main.php");
 require_once("core/forms.php");
-require_once("modules/rutas/clases/clientes_ruta_controller.php");
+require_once("modules/".MODULO."/clases/".ACCESO."_controller.php");
 
 $objTemplate = new template();
 if( !$objTemplate->check_module(MODULO) ) core_sesion_expirada();

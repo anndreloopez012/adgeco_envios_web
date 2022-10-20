@@ -133,6 +133,103 @@ class clientes_cliente_controller{
             }
             die();
         }
+        else if( $strTipoValidacion == "drawClienteCargaMasivaUpdate" ){
+
+            header("Content-Type: text/html; charset=iso-8859-1");
+
+            //set_time_limit(3600);
+            //ini_set('memory_limit', '-1');
+
+            $fileContacts = $_FILES['fileContacts'];
+            $fileContacts = file_get_contents($fileContacts['tmp_name']);
+            $fileContacts = str_replace(';;', ";NULL;", $fileContacts);
+            $fileContacts = str_replace(',', '', $fileContacts);
+            //$fileContacts = str_replace('/', '.', $fileContacts);
+            $fileContacts = explode(";", $fileContacts);
+            //$fileContacts = array_filter($fileContacts);
+            $intKey = 0;
+            $intControl = 1;
+            //print $intContadorLimite;         
+            foreach ($fileContacts as $contact) {
+
+                if ($intControl == 3) {
+                    $keyRow = 0;
+                    $arrCtrl = explode(PHP_EOL, $contact);
+                    if (count($arrCtrl) == 2) {
+                        //print_r($arrCtrl);
+                        $contact = $arrCtrl[0];
+                        $keyRow = $arrCtrl[1];
+                    } else {
+                        $contact = '';
+                        for ($i = 0; $i < count($arrCtrl); $i++) {
+                            $contact .= $arrCtrl[$i];
+                        }
+                        $keyRow = $arrCtrl[(count($arrCtrl) - 1)];
+                    }
+                }
+
+                $strTexto = trim(preg_replace("/\r|\n/", "", $contact));
+                $strTexto = str_replace("'", "", $strTexto);
+                //Reemplazamos la A y a
+                $strTexto = str_replace(
+                array('a', 'À', 'Â', 'Ä', 'a', 'à', 'ä', 'â', 'ª'),
+                array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+                $strTexto);
+        
+                //Reemplazamos la E y e
+                $strTexto = str_replace(
+                array('e', 'È', 'Ê', 'Ë', 'e', 'è', 'ë', 'ê'),
+                array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+                $strTexto);
+        
+                //Reemplazamos la I y i
+                $strTexto = str_replace(
+                array('i', 'Ì', 'Ï', 'Î', 'i', 'ì', 'ï', 'î'),
+                array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+                $strTexto);
+        
+                //Reemplazamos la O y o
+                $strTexto = str_replace(
+                array('o', 'Ò', 'Ö', 'Ô', 'o', 'ò', 'ö', 'ô'),
+                array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+                $strTexto);
+        
+                //Reemplazamos la U y u
+                $strTexto = str_replace(
+                array('u', 'Ù', 'Û', 'Ü', 'u', 'ù', 'ü', 'û'),
+                array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+                $strTexto );
+                $contactList[$intKey][$intControl] = $strTexto;
+                $intControl++;
+
+                if ($intControl == (12 + 1)) {
+                    $intKey++;
+                    if ($keyRow != 0) {
+                        $contactList[$intKey][1] = $keyRow;
+                    }
+                    $intControl = 2;
+                    //break;
+                }
+            }
+            //print 'contactList      '.$contactList;
+            $usuario = $_SESSION["hml"]["persona"];
+            foreach ($contactList as $key => $contactData) {
+                //print $contactData[0].'<br>';           
+                $contactData[1] = trim($contactData[1]);
+                $contactData[1] = str_replace(" ", "", "$contactData[1]");
+
+                $strQuery = "UPDATE cliente
+                            SET codigo_carga_update = '$contactData[3]',
+                             	recibo = $contactData[2], 
+                             	mod_fecha = NOW(), 
+                             	mod_user = $usuario, 
+                            WHERE crm = $contactData[1];";
+                //print 'strQuery   ' . $strQuery . '<br>   <br>    ';
+                db_query($strQuery);
+
+            }
+            die();
+        }
 
     }
 
@@ -193,6 +290,19 @@ class clientes_cliente_controller{
                                 mod_user = $this->intUser,
                                 mod_fecha = now()
                             WHERE cliente = {$cliente_mapa}";
+            db_query($strQuery); 
+    }
+
+    public function processModificarClienteEstado(){
+        $estado = isset($_POST['estado']) ? db_escape(user_input_delmagic($_POST['estado'],true)) : "";
+        $cliente_detalle = isset($_POST['cliente_detalle']) ? db_escape(user_input_delmagic($_POST['cliente_detalle'],true)) : "";
+
+        
+            $strQuery = "UPDATE cliente 
+                            SET estado = '$estado',
+                                mod_user = $this->intUser,
+                                mod_fecha = now()
+                            WHERE cliente = {$cliente_detalle}";
             db_query($strQuery); 
     }
 }
